@@ -1,38 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, ExternalLink, Flame } from 'lucide-react';
 import { GithubIcon } from '../common/Icons';
 import { CODING_STATS_DATA } from '../../data/portfolioData';
 
-export const CodingSection: React.FC = () => {
-  // Generate simulated GitHub contribution matrix (16 weeks x 7 days)
-  const generateContributionDays = () => {
-    const days = [];
-    for (let i = 0; i < 112; i++) {
-      // Deterministic pseudo-activity level (0 to 4)
-      const val = (i * 7 + (i % 5) * 3) % 11;
-      let level = 0;
-      if (val > 8) level = 4;
-      else if (val > 5) level = 3;
-      else if (val > 3) level = 2;
-      else if (val > 1) level = 1;
-      days.push(level);
-    }
-    return days;
-  };
+interface ContributionDay {
+  date: string;
+  count: number;
+  level: number;
+}
 
-  const contributionDays = generateContributionDays();
+export const CodingSection: React.FC = () => {
+  const [contributions, setContributions] = useState<ContributionDay[]>([]);
+  const [totalCommits, setTotalCommits] = useState<number>(CODING_STATS_DATA.github.contributionsThisYear);
+
+  // Fetch real GitHub contribution data for AuroraDangelo
+  useEffect(() => {
+    let isMounted = true;
+    fetch('https://github-contributions-api.jogruber.de/v4/AuroraDangelo?y=last')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        if (data && Array.isArray(data.contributions) && data.contributions.length > 0) {
+          setContributions(data.contributions);
+          if (data.total && typeof data.total.lastYear === 'number') {
+            setTotalCommits(data.total.lastYear);
+          }
+        }
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.warn('GitHub contributions live fetch fallback:', err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Display the most recent ~133 days (19 full weeks) in the widget matrix
+  const displayDays = contributions.length > 0
+    ? contributions.slice(-133)
+    : [];
 
   const getHeatmapColor = (level: number) => {
     switch (level) {
       case 4:
-        return '#10b981'; // Bright emerald
+        return '#34d399'; // Brightest neon emerald
       case 3:
-        return '#059669'; // Medium emerald
+        return '#10b981'; // Vibrant emerald
       case 2:
-        return '#047857'; // Deep emerald
+        return '#059669'; // Medium emerald
       case 1:
-        return '#064e3b'; // Dark emerald
+        return '#065f46'; // Subtle deep emerald
       default:
         return 'rgba(255, 255, 255, 0.05)';
     }
@@ -137,7 +157,7 @@ export const CodingSection: React.FC = () => {
                 <div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>LeetCode</h3>
                   <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                    @anshikapandey
+                    @anshikapandey04
                   </span>
                 </div>
               </div>
@@ -258,7 +278,7 @@ export const CodingSection: React.FC = () => {
                 <div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>GitHub Activity</h3>
                   <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                    @anshikapandey
+                    @AuroraDangelo
                   </span>
                 </div>
               </div>
@@ -292,9 +312,9 @@ export const CodingSection: React.FC = () => {
 
               <div style={{ padding: '12px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
                 <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#38bdf8' }}>
-                  {CODING_STATS_DATA.github.contributionsThisYear}+
+                  {totalCommits}+
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Commits / Yr</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Contributions</div>
               </div>
 
               <div style={{ padding: '12px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
@@ -305,27 +325,62 @@ export const CodingSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Matrix Simulation */}
+            {/* Real GitHub Contribution Matrix */}
             <div style={{ marginTop: '16px' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '8px', fontFamily: 'var(--font-mono)' }}>
-                Activity Matrix
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  Contribution Heatmap
+                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                  <span>Less</span>
+                  {[0, 1, 2, 3, 4].map((lvl) => (
+                    <div
+                      key={lvl}
+                      style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '2px',
+                        background: getHeatmapColor(lvl),
+                      }}
+                    />
+                  ))}
+                  <span>More</span>
+                </div>
               </div>
+
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(16, 1fr)',
+                  gridAutoFlow: 'column',
+                  gridTemplateRows: 'repeat(7, 1fr)',
                   gap: '4px',
+                  padding: '12px',
+                  borderRadius: '12px',
+                  background: 'rgba(5, 7, 12, 0.5)',
+                  border: '1px solid var(--border-subtle)',
+                  overflowX: 'auto',
                 }}
               >
-                {contributionDays.map((level, i) => (
+                {displayDays.map((day) => (
                   <div
-                    key={i}
+                    key={day.date}
                     style={{
-                      aspectRatio: '1',
-                      borderRadius: '2px',
-                      background: getHeatmapColor(level),
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '2.5px',
+                      background: getHeatmapColor(day.level),
+                      cursor: 'pointer',
+                      transition: 'transform 0.15s ease, filter 0.15s ease',
                     }}
-                    title={`Activity level: ${level}`}
+                    title={`${day.count} contribution${day.count === 1 ? '' : 's'} on ${day.date}`}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.3)';
+                      e.currentTarget.style.filter = 'brightness(1.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'brightness(1)';
+                    }}
                   />
                 ))}
               </div>
@@ -344,7 +399,7 @@ export const CodingSection: React.FC = () => {
             }}
           >
             <span>Primary Languages: <strong style={{ color: 'var(--text-primary)' }}>JS, C++, Java</strong></span>
-            <span style={{ color: '#10b981' }}>Active Streak</span>
+            <span style={{ color: '#10b981' }}>Live Synced</span>
           </div>
         </motion.div>
       </div>
