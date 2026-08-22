@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,41 +11,24 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    // Check saved theme
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('anshika_portfolio_theme') as Theme;
-      if (savedTheme === 'light' || savedTheme === 'dark') {
-        return savedTheme;
-      }
-      // Check system preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
-      }
-    }
-    return 'dark'; // Default dark
-  });
+  // Always dark — light mode removed
+  const theme: Theme = 'dark';
 
-  useEffect(() => {
+  // Ensure the root element stays dark on mount
+  if (typeof window !== 'undefined') {
     const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-      root.setAttribute('data-theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      root.classList.add('light');
-      root.setAttribute('data-theme', 'light');
-    }
-    localStorage.setItem('anshika_portfolio_theme', theme);
-  }, [theme]);
+    root.classList.add('dark');
+    root.classList.remove('light');
+    root.setAttribute('data-theme', 'dark');
+    localStorage.setItem('anshika_portfolio_theme', 'dark');
+  }
 
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    // No-op: light mode removed
   };
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
+  const setTheme = (_theme: Theme) => {
+    // No-op: light mode removed
   };
 
   return (

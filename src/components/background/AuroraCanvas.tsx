@@ -109,15 +109,107 @@ export const AuroraCanvas: React.FC = () => {
         vec3 darkBg = vec3(0.02, 0.025, 0.04); // #05070c
         vec3 lightBg = vec3(0.97, 0.98, 0.99); // #f8fafc
 
-        // Starfield particles in dark mode
+
+        // ── All-snowflake world-space grid — 3 depth layers, zero jitter ──
+        // Technique: floor() only determines the integer cell ID (stable hash).
+        // fract() gives a continuous 0..1 local position — perfectly smooth.
+        // Each layer scrolls at a different speed → real depth parallax.
+        // All shapes use a 6-arm + cross-branch snowflake SDF.
         float star = 0.0;
+
         if (uTheme < 0.5) {
-          float starNoise = hash(floor(gl_FragCoord.xy * 0.22));
-          if (starNoise > 0.99) {
-            float twinkle = sin(uTime * 2.0 + starNoise * 120.0) * 0.5 + 0.5;
-            star = twinkle * 0.25 * (1.0 - uv.y * 0.3);
+          float scrollPx = uScrollProgress * 4000.0; // ~4000px total page scroll
+          float PI = 3.14159265;
+
+          // ── Shared snowflake SDF macro (inlined per layer to avoid GLSL fn limit)
+          // d = local pixel-space offset from snowflake center
+          // armLen = arm length in pixels, armW = arm half-width in pixels
+
+          // ── LAYER 1: Far — tiny snowflakes, dense, very slow parallax ──
+          {
+            float cs = 88.0;
+            vec2 world = gl_FragCoord.xy + vec2(0.0, scrollPx * 0.08);
+            vec2 cellId = floor(world / cs);
+            vec2 cellLocal = fract(world / cs);
+
+            float h = hash(cellId);
+            if (h > 0.35) {
+              vec2 ctr = vec2(hash(cellId + vec2(1.3, 0.0)),
+                              hash(cellId + vec2(0.0, 1.9))) * 0.66 + 0.17;
+              vec2 d = (cellLocal - ctr) * cs;
+              float r = length(d);
+              float ang = atan(d.y, d.x);
+              float sec = PI / 3.0;
+              float a1 = mod(ang + PI, sec * 2.0) - sec;
+              float aLen = 3.5; float aW = 0.7;
+              float arms1 = step(abs(r * sin(a1)), aW) * step(r, aLen);
+              float a2 = mod(ang + PI + PI/6.0, sec*2.0) - sec;
+              float br1 = step(abs(r*sin(a2)), 0.5) * step(abs(r - aLen*0.5), 1.0);
+              float sf = clamp(arms1 + br1, 0.0, 1.0);
+              sf += 1.0 - smoothstep(0.8, 1.4, r); // center dot
+              float bri = 0.14 + hash(cellId + vec2(4.4, 2.2)) * 0.10;
+              star += sf * bri;
+            }
+          }
+
+          // ── LAYER 2: Mid — medium snowflakes, moderate parallax ──
+          {
+            float cs = 140.0;
+            vec2 world = gl_FragCoord.xy + vec2(0.0, scrollPx * 0.22);
+            vec2 cellId = floor(world / cs);
+            vec2 cellLocal = fract(world / cs);
+
+            float h = hash(cellId + vec2(17.0, 5.0));
+            if (h > 0.58) {
+              vec2 ctr = vec2(hash(cellId + vec2(3.1, 0.0)),
+                              hash(cellId + vec2(0.0, 4.7))) * 0.64 + 0.18;
+              vec2 d = (cellLocal - ctr) * cs;
+              float r = length(d);
+              float ang = atan(d.y, d.x);
+              float sec = PI / 3.0;
+              float a1 = mod(ang + PI, sec*2.0) - sec;
+              float aLen = 6.5; float aW = 1.1;
+              float arms1 = step(abs(r*sin(a1)), aW) * step(r, aLen);
+              float a2 = mod(ang + PI + PI/6.0, sec*2.0) - sec;
+              float br1 = step(abs(r*sin(a2)), 0.7) * step(abs(r - aLen*0.44), 1.4);
+              float br2 = step(abs(r*sin(a2)), 0.7) * step(abs(r - aLen*0.72), 1.2);
+              float sf = clamp(arms1 + br1 + br2, 0.0, 1.0);
+              sf += 1.0 - smoothstep(1.1, 1.9, r);
+              float bri = 0.22 + hash(cellId + vec2(9.3, 3.1)) * 0.16;
+              star += sf * bri;
+            }
+          }
+
+          // ── LAYER 3: Near — large sparse snowflakes, strong parallax ──
+          {
+            float cs = 210.0;
+            vec2 world = gl_FragCoord.xy + vec2(0.0, scrollPx * 0.42);
+            vec2 cellId = floor(world / cs);
+            vec2 cellLocal = fract(world / cs);
+
+            float h = hash(cellId + vec2(41.0, 19.0));
+            if (h > 0.78) {
+              vec2 ctr = vec2(hash(cellId + vec2(7.5, 0.0)),
+                              hash(cellId + vec2(0.0, 8.9))) * 0.60 + 0.20;
+              vec2 d = (cellLocal - ctr) * cs;
+              float r = length(d);
+              float ang = atan(d.y, d.x);
+              float sec = PI / 3.0;
+              float a1 = mod(ang + PI, sec*2.0) - sec;
+              float aLen = 12.0; float aW = 1.6;
+              float arms1 = step(abs(r*sin(a1)), aW) * step(r, aLen);
+              float a2 = mod(ang + PI + PI/6.0, sec*2.0) - sec;
+              float br1 = step(abs(r*sin(a2)), 1.0) * step(abs(r - aLen*0.40), 2.0);
+              float br2 = step(abs(r*sin(a2)), 1.0) * step(abs(r - aLen*0.68), 1.8);
+              float br3 = step(abs(r*sin(a2)), 0.8) * step(abs(r - aLen*0.88), 1.4);
+              float sf = clamp(arms1 + br1 + br2 + br3, 0.0, 1.0);
+              sf += 1.0 - smoothstep(1.5, 2.5, r);
+              float bri = 0.35 + hash(cellId + vec2(15.7, 6.3)) * 0.22;
+              star += sf * bri;
+            }
           }
         }
+
 
         vec3 finalColor;
         if (uTheme > 0.5) {
@@ -146,7 +238,7 @@ export const AuroraCanvas: React.FC = () => {
       uTime: { value: 0 },
       uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-      uTheme: { value: themeRef.current === 'light' ? 1.0 : 0.0 },
+      uTheme: { value: 0.0 }, // Always dark
       uScrollProgress: { value: 0.0 },
     };
 
@@ -204,8 +296,8 @@ export const AuroraCanvas: React.FC = () => {
       currentMouseY += (targetMouseY - currentMouseY) * 0.035;
       uniforms.uMouse.value.set(currentMouseX, currentMouseY);
 
-      const targetThemeVal = themeRef.current === 'light' ? 1.0 : 0.0;
-      uniforms.uTheme.value += (targetThemeVal - uniforms.uTheme.value) * 0.08;
+      // Always dark mode — no theme transition needed
+      uniforms.uTheme.value = 0.0;
 
       renderer.render(scene, camera);
     };

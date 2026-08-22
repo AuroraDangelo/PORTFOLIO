@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Menu, X, FileText } from 'lucide-react';
-import { useTheme } from '../../context/ThemeContext';
+import { Menu, X, FileText } from 'lucide-react';
+
 
 interface NavbarProps {
   onOpenResumeModal: () => void;
@@ -17,7 +17,6 @@ const NAV_LINKS = [
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
-  const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -195,32 +194,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResumeModal }) => {
             >
               <FileText size={15} />
               <span className="hide-mobile">Resume</span>
-            </button>
-
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--text-primary)',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-              }}
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              {theme === 'dark' ? (
-                <Sun size={17} style={{ color: '#fbbf24' }} />
-              ) : (
-                <Moon size={17} style={{ color: '#8b5cf6' }} />
-              )}
             </button>
 
             {/* Mobile Menu Hamburger */}

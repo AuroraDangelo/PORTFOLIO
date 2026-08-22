@@ -60,7 +60,7 @@ export const PROJECTS_DATA: Project[] = [
     ],
     techStack: ['React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'Gemini AI API', 'Web Audio API'],
     githubUrl: 'https://github.com/AuroraDangelo/JobPrepAI',
-    demoUrl: 'https://jobprepai-1-rzkd.onrender.com/login',
+    demoUrl: 'https://jobprepai-1-rzkd.onrender.com',
     architectureDetails: 'Utilizes modern streaming LLM endpoints with structured JSON schemas to deliver instantaneous scoring without frontend blocking.'
   },
   {
@@ -79,8 +79,7 @@ export const PROJECTS_DATA: Project[] = [
       'Minimalist dark mode HUD matching LeetCode’s native UI theme'
     ],
     techStack: ['JavaScript', 'Manifest V3', 'Chrome Extension APIs', 'Tailwind CSS', 'OpenAI / Gemini API'],
-    githubUrl: 'https://github.com/anshikapandey/leetcode-ai-helper',
-    demoUrl: 'https://chromewebstore.google.com/detail/leetcode-ai-helper-placeholder',
+    githubUrl: 'https://github.com/AuroraDangelo/leetcode-ai-helper',
     architectureDetails: 'Engineered with Manifest V3 background service workers and isolated content scripts to maintain maximum browser security and memory efficiency.'
   },
   {
@@ -210,8 +209,7 @@ export const CODING_STATS_DATA: CodingStats = {
   },
   github: {
     publicRepos: 18,
-    totalStars: 24,
-    contributionsThisYear: 450,
+    contributionsThisYear: 72,
     profileUrl: 'https://github.com/AuroraDangelo'
   },
   geeksForGeeks: {

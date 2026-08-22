@@ -45,7 +45,6 @@ export interface CodingStats {
   };
   github: {
     publicRepos: number;
-    totalStars: number;
     contributionsThisYear: number;
     profileUrl: string;
   };
