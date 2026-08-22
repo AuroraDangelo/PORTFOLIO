@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download, Eye, CheckCircle2, Check } from 'lucide-react';
-import { PERSONAL_INFO } from '../../data/portfolioData';
+
 
 interface ResumeSectionProps {
   onOpenResumeModal: () => void;
@@ -12,24 +12,12 @@ export const ResumeSection: React.FC<ResumeSectionProps> = ({ onOpenResumeModal 
 
   const handleQuickDownload = () => {
     setDownloadSuccess(true);
-    const element = document.createElement('a');
-    const file = new Blob([
-      `ANSHIKA PANDEY - Software Developer Resume
-Email: ${PERSONAL_INFO.email}
-GitHub: ${PERSONAL_INFO.github}
-LinkedIn: ${PERSONAL_INFO.linkedin}
-
-MCA (2025 - 2027) | BCA (2022 - 2025)
-Skills: C++, Java, JavaScript, Python, SQL, React, Node.js, Express.js, MongoDB
-Projects: Expense Management App (MERN), Interview AI, LeetCode AI Helper, Real-Time News Hub, Atmospheric Weather App
-`
-    ], { type: 'text/plain;charset=utf-8' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'Anshika_Pandey_Resume.txt';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-
+    const a = document.createElement('a');
+    a.href = '/AnshikaPandeyResume.pdf';
+    a.download = 'Anshika_Pandey_Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     setTimeout(() => setDownloadSuccess(false), 3000);
   };
 

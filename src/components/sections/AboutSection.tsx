@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { User, BrainCircuit, Rocket, CheckCircle2, Laptop, GraduationCap, Camera } from 'lucide-react';
+import { User, BrainCircuit, Rocket, CheckCircle2, Laptop, GraduationCap } from 'lucide-react';
 
 export const AboutSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -92,12 +92,13 @@ export const AboutSection: React.FC = () => {
 
       {/* ── Top Row: Photo + Story ────────────────────────────────────────── */}
       <div
+        className="about-hero-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '40px',
+          gridTemplateColumns: 'minmax(320px, 380px) 1fr',
+          gap: '48px',
           alignItems: 'center',
-          marginBottom: '40px',
+          marginBottom: '48px',
         }}
       >
         {/* ── Photo Column ── */}
@@ -106,10 +107,10 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          style={{ display: 'flex', justifyContent: 'center' }}
+          style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
         >
           <motion.div
-            style={{ y: imgY, position: 'relative', width: 'fit-content' }}
+            style={{ y: imgY, position: 'relative', width: '100%', maxWidth: '380px' }}
           >
             {/* Outer decorative ring */}
             <div
@@ -128,11 +129,11 @@ export const AboutSection: React.FC = () => {
                 position: 'absolute',
                 top: '-20px',
                 right: '-20px',
-                width: '48px',
-                height: '48px',
+                width: '54px',
+                height: '54px',
                 borderTop: '2px solid #34d399',
                 borderRight: '2px solid #34d399',
-                borderRadius: '0 8px 0 0',
+                borderRadius: '0 10px 0 0',
                 pointerEvents: 'none',
               }}
             />
@@ -141,11 +142,11 @@ export const AboutSection: React.FC = () => {
                 position: 'absolute',
                 bottom: '-20px',
                 left: '-20px',
-                width: '48px',
-                height: '48px',
+                width: '54px',
+                height: '54px',
                 borderBottom: '2px solid #38bdf8',
                 borderLeft: '2px solid #38bdf8',
-                borderRadius: '0 0 0 8px',
+                borderRadius: '0 0 0 10px',
                 pointerEvents: 'none',
               }}
             />
@@ -154,80 +155,29 @@ export const AboutSection: React.FC = () => {
             <div
               id="about-photo-frame"
               style={{
-                width: '300px',
-                height: '360px',
-                borderRadius: '18px',
+                width: '100%',
+                maxWidth: '360px',
+                aspectRatio: '3 / 4',
+                borderRadius: '20px',
                 overflow: 'hidden',
                 position: 'relative',
                 background: 'linear-gradient(145deg, rgba(13,18,28,0.9) 0%, rgba(16,24,40,0.95) 100%)',
-                border: '1px solid rgba(52,211,153,0.2)',
-                boxShadow: '0 30px 60px -12px rgba(0,0,0,0.6), 0 0 40px rgba(16,185,129,0.08)',
+                border: '1px solid rgba(52,211,153,0.22)',
+                boxShadow: '0 30px 60px -12px rgba(0,0,0,0.7), 0 0 40px rgba(16,185,129,0.1)',
               }}
             >
-              {/*
-                ──────────────────────────────────────────────────────
-                  REPLACE THIS BLOCK with an <img> tag once you have
-                  your photo ready. Example:
-
-                  <img
-                    src="/images/anshika.jpg"
-                    alt="Anshika Pandey"
-                    style={{ width:'100%', height:'100%', objectFit:'cover' }}
-                  />
-                ──────────────────────────────────────────────────────
-              */}
-              {/* Placeholder shown until photo is added */}
-              <div
+              {/* Real photo */}
+              <img
+                src="/images/anshika.jpg"
+                alt="Anshika Pandey"
                 style={{
                   width: '100%',
                   height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '14px',
-                  background: `
-                    radial-gradient(ellipse at 30% 20%, rgba(16,185,129,0.14) 0%, transparent 55%),
-                    radial-gradient(ellipse at 70% 80%, rgba(6,182,212,0.10) 0%, transparent 55%),
-                    linear-gradient(160deg, rgba(13,18,28,0.95) 0%, rgba(5,10,20,1) 100%)
-                  `,
+                  objectFit: 'cover',
+                  objectPosition: 'center 15%',
+                  display: 'block',
                 }}
-              >
-                <div
-                  style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    background: 'rgba(52,211,153,0.12)',
-                    border: '1.5px dashed rgba(52,211,153,0.4)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Camera size={32} color="rgba(52,211,153,0.6)" />
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{
-                    fontSize: '0.82rem',
-                    color: 'rgba(52,211,153,0.7)',
-                    fontFamily: 'var(--font-mono)',
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    margin: 0,
-                  }}>
-                    Your Photo Here
-                  </p>
-                  <p style={{
-                    fontSize: '0.72rem',
-                    color: 'var(--text-muted)',
-                    marginTop: '4px',
-                    fontFamily: 'var(--font-mono)',
-                  }}>
-                    Replace in AboutSection.tsx
-                  </p>
-                </div>
-              </div>
+              />
 
               {/* Overlay gradient at bottom for a cinematic feel */}
               <div
@@ -237,31 +187,31 @@ export const AboutSection: React.FC = () => {
                   left: 0,
                   right: 0,
                   height: '80px',
-                  background: 'linear-gradient(to top, rgba(5,7,12,0.8) 0%, transparent 100%)',
+                  background: 'linear-gradient(to top, rgba(5,7,12,0.85) 0%, transparent 100%)',
                   pointerEvents: 'none',
                 }}
               />
             </div>
 
             {/* Floating name badge at bottom of photo */}
-            <div
+            {/* <div
               style={{
                 position: 'absolute',
-                bottom: '16px',
+                bottom: '18px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 background: 'rgba(5,7,12,0.92)',
                 backdropFilter: 'blur(14px)',
                 WebkitBackdropFilter: 'blur(14px)',
-                border: '1px solid rgba(52,211,153,0.3)',
+                border: '1px solid rgba(52,211,153,0.35)',
                 borderRadius: '9999px',
-                padding: '6px 18px',
+                padding: '7px 22px',
                 whiteSpace: 'nowrap',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.5)',
               }}
             >
               <span style={{
-                fontSize: '0.82rem',
+                fontSize: '0.88rem',
                 fontWeight: 700,
                 fontFamily: 'var(--font-heading)',
                 color: '#f8fafc',
@@ -269,7 +219,7 @@ export const AboutSection: React.FC = () => {
               }}>
                 Anshika Pandey
               </span>
-            </div>
+            </div> */}
           </motion.div>
         </motion.div>
 
@@ -373,6 +323,24 @@ export const AboutSection: React.FC = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* ── Responsive Styling ── */}
+      <style>{`
+        @media (max-width: 900px) {
+          .about-hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 36px !important;
+          }
+          #about-photo-frame {
+            max-width: 320px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          #about-photo-frame {
+            max-width: 270px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

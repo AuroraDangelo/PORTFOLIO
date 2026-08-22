@@ -158,7 +158,7 @@ export const PROJECTS_DATA: Project[] = [
 export const JOURNEY_DATA: JourneyMilestone[] = [
   {
     period: '2025 – 2027',
-    title: '',
+    title: 'Master of Computer Applications (MCA)',
     degree: 'Master of Computer Applications (MCA)',
     institution: 'University / Institute of Technology',
     status: 'In Progress',
@@ -178,7 +178,7 @@ export const JOURNEY_DATA: JourneyMilestone[] = [
   },
   {
     period: '2022 – 2025',
-    title: '',
+    title: 'Bachelor of Computer Applications(BCA)',
     degree: 'Bachelor of Computer Applications',
     institution: 'University / College of Computer Science',
     status: 'Completed',
@@ -200,11 +200,10 @@ export const JOURNEY_DATA: JourneyMilestone[] = [
 
 export const CODING_STATS_DATA: CodingStats = {
   leetCode: {
-    totalSolved: 320,
-    easy: 140,
-    medium: 155,
-    hard: 25,
-    ranking: 'Top 15%',
+    totalSolved: 119,
+    easy: 68,
+    medium: 49,
+    hard: 2,
     profileUrl: 'https://leetcode.com/u/anshikapandey04/'
   },
   github: {
@@ -213,8 +212,8 @@ export const CODING_STATS_DATA: CodingStats = {
     profileUrl: 'https://github.com/AuroraDangelo'
   },
   geeksForGeeks: {
-    solvedProblems: 180,
-    instituteRank: 'Top 10',
+    solvedProblems: 182,
+    instituteRank: 'Top 220',
     profileUrl: 'https://www.geeksforgeeks.org/profile/anshika9ukj?tab=activity'
   }
 };

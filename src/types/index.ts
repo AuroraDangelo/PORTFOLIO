@@ -40,7 +40,6 @@ export interface CodingStats {
     easy: number;
     medium: number;
     hard: number;
-    ranking: string;
     profileUrl: string;
   };
   github: {

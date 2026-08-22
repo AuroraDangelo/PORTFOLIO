@@ -179,7 +179,7 @@ export const CodingSection: React.FC = () => {
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.easy}</span>
                 </div>
                 <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.06)', overflow: 'hidden' }}>
-                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.easy / 320) * 100}%`, height: '100%', background: '#34d399' }} />
+                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.easy / (CODING_STATS_DATA.leetCode.totalSolved || 1)) * 100}%`, height: '100%', background: '#34d399' }} />
                 </div>
               </div>
 
@@ -190,7 +190,7 @@ export const CodingSection: React.FC = () => {
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.medium}</span>
                 </div>
                 <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.06)', overflow: 'hidden' }}>
-                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.medium / 320) * 100}%`, height: '100%', background: '#fbbf24' }} />
+                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.medium / (CODING_STATS_DATA.leetCode.totalSolved || 1)) * 100}%`, height: '100%', background: '#fbbf24' }} />
                 </div>
               </div>
 
@@ -201,7 +201,7 @@ export const CodingSection: React.FC = () => {
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.hard}</span>
                 </div>
                 <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255, 255, 255, 0.06)', overflow: 'hidden' }}>
-                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.hard / 320) * 100}%`, height: '100%', background: '#f87171' }} />
+                  <div style={{ width: `${(CODING_STATS_DATA.leetCode.hard / (CODING_STATS_DATA.leetCode.totalSolved || 1)) * 100}%`, height: '100%', background: '#f87171' }} />
                 </div>
               </div>
             </div>
@@ -218,7 +218,7 @@ export const CodingSection: React.FC = () => {
               color: 'var(--text-muted)',
             }}
           >
-            <span>Platform Rank: <strong style={{ color: '#38bdf8' }}>{CODING_STATS_DATA.leetCode.ranking}</strong></span>
+            <span>Track: <strong style={{ color: '#38bdf8' }}>DSA & Problem Solving</strong></span>
             <span>Focus: <strong style={{ color: '#34d399' }}>C++ / Java</strong></span>
           </div>
         </motion.div>

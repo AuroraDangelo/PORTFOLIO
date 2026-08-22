@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, FileText, Check, Mail, MapPin, Globe } from 'lucide-react';
-import { PERSONAL_INFO } from '../../data/portfolioData';
+import { X, Download, FileText, Check, ExternalLink } from 'lucide-react';
+
+const RESUME_PDF = '/AnshikaPandeyResume.pdf';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -15,43 +16,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
   const handleDownload = () => {
     setDownloaded(true);
-    const element = document.createElement('a');
-    const file = new Blob([
-      `ANSHIKA PANDEY - Software Developer Resume
-Email: ${PERSONAL_INFO.email} | Location: ${PERSONAL_INFO.location}
-GitHub: ${PERSONAL_INFO.github} | LinkedIn: ${PERSONAL_INFO.linkedin}
-
-EDUCATION
-- Master of Computer Applications (MCA), 2025 - 2027
-- Bachelor of Computer Applications (BCA), 2022 - 2025 (First Class Distinction)
-
-TECHNICAL SKILLS
-- Languages: C++, C, Java, JavaScript, Python, SQL
-- Frontend: React, HTML5, CSS3, Tailwind CSS, Bootstrap
-- Backend: Node.js, Express.js, REST APIs
-- Databases: MongoDB, MySQL, Relational SQL
-- Tools: Git, GitHub, VS Code, IntelliJ IDEA
-
-FLAGSHIP PROJECTS
-1. Expense Management App (MERN Stack)
-   - Real-time transaction ledger, category charts, JWT auth, MongoDB Aggregation.
-2. Interview AI (AI Mock Interviewer)
-   - LLM-powered mock questions, speech evaluation, real-time feedback scoring.
-3. LeetCode AI Helper (Chrome Extension)
-   - Contextual hints, complexity analysis, Manifest V3.
-4. Real-Time News Hub (Node.js/Express)
-   - Dynamic multi-category breaking news aggregator.
-5. Atmospheric Weather App
-   - Geolocation & multi-day weather forecast engine.
-`
-    ], { type: 'text/plain;charset=utf-8' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'Anshika_Pandey_Resume.txt';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-
+    const a = document.createElement('a');
+    a.href = RESUME_PDF;
+    a.download = 'Anshika_Pandey_Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     setTimeout(() => setDownloaded(false), 3000);
+  };
+
+  const handleOpenInTab = () => {
+    window.open(RESUME_PDF, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -64,250 +39,106 @@ FLAGSHIP PROJECTS
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '20px',
-          background: 'rgba(5, 7, 12, 0.88)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
+          padding: '16px',
+          background: 'rgba(5, 7, 12, 0.90)',
+          backdropFilter: 'blur(18px)',
+          WebkitBackdropFilter: 'blur(18px)',
         }}
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          initial={{ opacity: 0, scale: 0.94, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.94, y: 20 }}
-          transition={{ duration: 0.3 }}
-          className="glass-panel"
+          exit={{ opacity: 0, scale: 0.94, y: 24 }}
+          transition={{ duration: 0.28, ease: 'easeOut' }}
           style={{
             width: '100%',
-            maxWidth: '840px',
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            padding: '36px',
-            background: 'var(--bg-card-solid)',
-            border: '1px solid var(--border-active)',
-            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.2)',
+            maxWidth: '900px',
+            height: '92vh',
+            display: 'flex',
+            flexDirection: 'column',
+            background: '#0a0d16',
+            border: '1px solid rgba(52,211,153,0.35)',
+            borderRadius: '18px',
+            boxShadow: '0 30px 80px rgba(0,0,0,0.85), 0 0 40px rgba(16,185,129,0.15)',
+            overflow: 'hidden',
             position: 'relative',
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Top Bar with Actions */}
+          {/* Top toolbar */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              paddingBottom: '20px',
-              borderBottom: '1px solid var(--border-subtle)',
-              marginBottom: '28px',
+              padding: '14px 22px',
+              borderBottom: '1px solid rgba(255,255,255,0.07)',
+              background: 'rgba(10,13,22,0.98)',
+              flexShrink: 0,
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <FileText size={20} className="text-emerald-400" />
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 800 }}>Curriculum Vitae Preview</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+              <FileText size={18} color="#34d399" />
+              <span style={{
+                fontFamily: 'var(--font-heading)', fontWeight: 700,
+                fontSize: '1.05rem', color: '#f8fafc',
+              }}>
+                Curriculum Vitae — Anshika Pandey
+              </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <button onClick={handleDownload} className="btn-primary" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
-                {downloaded ? <Check size={16} /> : <Download size={16} />}
-                <span>{downloaded ? 'Downloaded!' : 'Download Resume'}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Open in new tab */}
+              <button
+                onClick={handleOpenInTab}
+                className="btn-secondary"
+                style={{ padding: '7px 14px', fontSize: '0.82rem', gap: '6px' }}
+                title="Open PDF in new tab"
+              >
+                <ExternalLink size={14} />
+                <span>Open</span>
               </button>
 
+              {/* Download PDF */}
+              <button
+                onClick={handleDownload}
+                className="btn-primary"
+                style={{ padding: '7px 16px', fontSize: '0.82rem', gap: '6px' }}
+              >
+                {downloaded ? <Check size={15} /> : <Download size={15} />}
+                <span>{downloaded ? 'Saved!' : 'Download PDF'}</span>
+              </button>
+
+              {/* Close */}
               <button
                 onClick={onClose}
                 style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
+                  width: '34px', height: '34px', borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: '#94a3b8', display: 'flex',
+                  alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', transition: 'all 0.2s',
                 }}
                 aria-label="Close modal"
               >
-                <X size={18} />
+                <X size={17} />
               </button>
             </div>
           </div>
 
-          {/* Printable Styled Resume Document */}
-          <div
+          {/* PDF embed — fills the rest of the modal */}
+          <iframe
+            src={`${RESUME_PDF}#toolbar=0&navpanes=0&scrollbar=1`}
+            title="Anshika Pandey Resume"
             style={{
-              padding: '28px',
-              borderRadius: '12px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid var(--border-subtle)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
+              flex: 1,
+              width: '100%',
+              border: 'none',
+              background: '#fff',
             }}
-          >
-            {/* Candidate Header */}
-            <div>
-              <h1 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-primary)' }}>
-                ANSHIKA PANDEY
-              </h1>
-              <p style={{ color: '#34d399', fontWeight: 600, fontSize: '1.05rem', margin: '4px 0 12px' }}>
-                Software Developer • MCA Scholar
-              </p>
-
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '16px',
-                  fontSize: '0.88rem',
-                  color: 'var(--text-secondary)',
-                }}
-              >
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Mail size={14} className="text-emerald-400" />
-                  {PERSONAL_INFO.email}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <MapPin size={14} className="text-cyan-400" />
-                  {PERSONAL_INFO.location}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Globe size={14} className="text-violet-400" />
-                  github.com/anshikapandey
-                </span>
-              </div>
-            </div>
-
-            {/* Section: Education */}
-            <div>
-              <h3
-                style={{
-                  fontSize: '1rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: '#38bdf8',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  paddingBottom: '6px',
-                  marginBottom: '14px',
-                }}
-              >
-                Education
-              </h3>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-                    <span>Master of Computer Applications (MCA)</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: '#34d399', fontSize: '0.85rem' }}>
-                      2025 – 2027 (Pursuing)
-                    </span>
-                  </div>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                    Advanced Computing, Distributed Systems, Cloud Architecture & Scalable Web Systems
-                  </p>
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-                    <span>Bachelor of Computer Applications (BCA)</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: '#34d399', fontSize: '0.85rem' }}>
-                      2022 – 2025
-                    </span>
-                  </div>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-                    Core Computer Science, Data Structures, OOP, Database Management Systems (First Class Distinction)
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Section: Technical Skills */}
-            <div>
-              <h3
-                style={{
-                  fontSize: '1rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: '#38bdf8',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  paddingBottom: '6px',
-                  marginBottom: '14px',
-                }}
-              >
-                Technical Capabilities
-              </h3>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.9rem' }}>
-                <div>
-                  <strong style={{ color: 'var(--text-primary)' }}>Languages:</strong> C++, C, Java, JavaScript (ES6+), Python, SQL
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--text-primary)' }}>Frontend:</strong> React, HTML5, CSS3, Tailwind CSS, Bootstrap, Responsive UI/UX
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--text-primary)' }}>Backend & APIs:</strong> Node.js, Express.js, RESTful Architecture, JWT Auth
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--text-primary)' }}>Databases:</strong> MongoDB (Mongoose), SQL (MySQL/PostgreSQL), Schema Optimization
-                </div>
-                <div>
-                  <strong style={{ color: 'var(--text-primary)' }}>Developer Tools:</strong> Git, GitHub, VS Code, IntelliJ IDEA
-                </div>
-              </div>
-            </div>
-
-            {/* Section: Key Projects */}
-            <div>
-              <h3
-                style={{
-                  fontSize: '1rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: '#38bdf8',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  paddingBottom: '6px',
-                  marginBottom: '14px',
-                }}
-              >
-                Featured Engineering Projects
-              </h3>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '0.9rem' }}>
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-                    <span>Expense Management App — Full Stack MERN</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>MongoDB • Express • React • Node</span>
-                  </div>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                    Engineered personal finance intelligence application with JWT security, MongoDB aggregation pipelines, and interactive category budget analytics charts.
-                  </p>
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-                    <span>Interview AI — AI Mock Interview Platform</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>React • Node.js • LLM API</span>
-                  </div>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                    Built interactive technical interview simulator generating contextual questions, evaluating real-time responses, and providing comprehensive scoring cards.
-                  </p>
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
-                    <span>LeetCode AI Helper — Chrome Extension</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>JavaScript • Manifest V3</span>
-                  </div>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                    Developed browser extension offering progressive hints, complexity analysis, and edge-case reminders without leaking full solutions.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          />
         </motion.div>
       </div>
     </AnimatePresence>
