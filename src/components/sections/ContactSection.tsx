@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, Copy, Check, MapPin } from 'lucide-react';
+import { Mail, Send, Copy, Check, MapPin, AlertCircle, RefreshCw } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../common/Icons';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 
@@ -9,6 +9,7 @@ export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -16,18 +17,56 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${PERSONAL_INFO.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          _replyto: formData.email,
+          subject: formData.subject || `New Portfolio Message from ${formData.name}`,
+          _subject: `[Portfolio] ${formData.subject || `Message from ${formData.name}`}`,
+          message: formData.message,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && (result.success === 'true' || result.success === true || result.message)) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(result.message || 'Unable to send message at this time.');
+      }
+    } catch (err: any) {
+      console.error('Contact Form submission error:', err);
+      // Fallback: If network failed or blocked, offer manual mailto
+      setErrorMessage(
+        'There was an issue sending your message automatically. You can try again or email me directly.'
+      );
+    } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 1000);
+    }
   };
+
+  const mailtoFallback = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
+    formData.subject || `Portfolio Message from ${formData.name || 'Visitor'}`
+  )}&body=${encodeURIComponent(
+    `Hi Anshika,\n\n${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
+  )}`;
 
   return (
     <section
@@ -143,13 +182,16 @@ export const ContactSection: React.FC = () => {
                 marginBottom: '20px',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <Mail size={20} style={{ color: '#10b981' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                <Mail size={20} style={{ color: '#10b981', flexShrink: 0 }} />
                 <span
                   style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.92rem',
                     color: 'var(--text-primary)',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {PERSONAL_INFO.email}
@@ -170,6 +212,7 @@ export const ContactSection: React.FC = () => {
                   gap: '6px',
                   fontSize: '0.82rem',
                   transition: 'all 0.2s ease',
+                  flexShrink: 0,
                 }}
                 aria-label="Copy email address"
               >
@@ -228,76 +271,227 @@ export const ContactSection: React.FC = () => {
             padding: '36px',
           }}
         >
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '20px' }}>
-            Send a Direct Message
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>
+              Send a Direct Message
+            </h3>
+            <span
+              style={{
+                fontSize: '0.75rem',
+                fontFamily: 'var(--font-mono)',
+                color: 'var(--accent-primary)',
+                background: 'rgba(56, 189, 248, 0.1)',
+                padding: '4px 8px',
+                borderRadius: '6px',
+                border: '1px solid rgba(56, 189, 248, 0.2)',
+              }}
+            >
+              Delivered to {PERSONAL_INFO.email.split('@')[0]}
+            </span>
+          </div>
 
           {submitted ? (
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
               style={{
-                padding: '32px 24px',
-                borderRadius: '12px',
-                background: 'rgba(16, 185, 129, 0.12)',
+                padding: '36px 24px',
+                borderRadius: '14px',
+                background: 'rgba(16, 185, 129, 0.1)',
                 border: '1px solid rgba(16, 185, 129, 0.3)',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '12px',
+                gap: '14px',
               }}
             >
               <div
                 style={{
-                  width: '48px',
-                  height: '48px',
+                  width: '52px',
+                  height: '52px',
                   borderRadius: '50%',
-                  background: '#10b981',
-                  color: '#05070c',
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)',
                 }}
               >
-                <Check size={24} />
+                <Check size={26} strokeWidth={2.5} />
               </div>
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+              <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                 Message Sent Successfully!
               </h4>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                Thank you for reaching out. I will get back to you shortly!
+              <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '380px' }}>
+                Your message has been delivered to <strong>{PERSONAL_INFO.email}</strong>. I will get back to you as soon as possible!
               </p>
-            </div>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="btn-secondary"
+                style={{
+                  marginTop: '10px',
+                  padding: '8px 18px',
+                  fontSize: '0.85rem',
+                  gap: '6px',
+                }}
+              >
+                <RefreshCw size={14} />
+                <span>Send Another Message</span>
+              </button>
+            </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {errorMessage && (
+                <div
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: '10px',
+                    background: 'rgba(239, 68, 68, 0.12)',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    color: '#f87171',
+                    fontSize: '0.88rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <AlertCircle size={16} style={{ flexShrink: 0 }} />
+                    <span>{errorMessage}</span>
+                  </div>
+                  <a
+                    href={mailtoFallback}
+                    className="btn-secondary"
+                    style={{
+                      alignSelf: 'flex-start',
+                      padding: '6px 12px',
+                      fontSize: '0.8rem',
+                      borderColor: 'rgba(239, 68, 68, 0.4)',
+                      color: '#ffffff',
+                    }}
+                  >
+                    Open in Your Email Client
+                  </a>
+                </div>
+              )}
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+                <div>
+                  <label
+                    style={{
+                      display: 'block',
+                      fontSize: '0.82rem',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--text-muted)',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    Your Name <span style={{ color: 'var(--accent-primary)' }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Sarah / Tech Recruiter"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid var(--border-subtle)',
+                      color: 'var(--text-primary)',
+                      fontSize: '0.92rem',
+                      fontFamily: 'inherit',
+                      outline: 'none',
+                      transition: 'border-color 0.2s',
+                    }}
+                    onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
+                    onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: 'block',
+                      fontSize: '0.82rem',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--text-muted)',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    Your Email <span style={{ color: 'var(--accent-primary)' }}>*</span>{' '}
+                    <span style={{ fontSize: '0.75rem', opacity: 0.7 }}>(for reply)</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="your.email@company.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 14px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid var(--border-subtle)',
+                      color: 'var(--text-primary)',
+                      fontSize: '0.92rem',
+                      fontFamily: 'inherit',
+                      outline: 'none',
+                      transition: 'border-color 0.2s',
+                    }}
+                    onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
+                    onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
+                  />
+                  <span
+                    style={{
+                      display: 'block',
+                      fontSize: '0.72rem',
+                      color: 'var(--text-muted)',
+                      marginTop: '4px',
+                    }}
+                  >
+                    Where Anshika can send her response.
+                  </span>
+                </div>
+              </div>
+
               <div>
                 <label
                   style={{
                     display: 'block',
-                    fontSize: '0.85rem',
+                    fontSize: '0.82rem',
                     fontFamily: 'var(--font-mono)',
                     color: 'var(--text-muted)',
                     marginBottom: '6px',
                   }}
                 >
-                  Your Name
+                  Subject (Optional)
                 </label>
                 <input
                   type="text"
-                  required
-                  placeholder="e.g. Alex Morgan"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Internship Opportunity / Project Collaboration"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
+                    padding: '12px 14px',
                     borderRadius: '10px',
                     background: 'rgba(255, 255, 255, 0.04)',
                     border: '1px solid var(--border-subtle)',
                     color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
+                    fontSize: '0.92rem',
                     fontFamily: 'inherit',
                     outline: 'none',
+                    transition: 'border-color 0.2s',
                   }}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
@@ -305,64 +499,36 @@ export const ContactSection: React.FC = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontSize: '0.85rem',
+                    fontSize: '0.82rem',
                     fontFamily: 'var(--font-mono)',
                     color: 'var(--text-muted)',
                     marginBottom: '6px',
                   }}
                 >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="alex@company.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
-                    fontFamily: 'inherit',
-                    outline: 'none',
-                  }}
-                />
-              </div>
-
-              <div>
-                <label
-                  style={{
-                    display: 'block',
-                    fontSize: '0.85rem',
-                    fontFamily: 'var(--font-mono)',
-                    color: 'var(--text-muted)',
-                    marginBottom: '6px',
-                  }}
-                >
-                  Message
+                  Message <span style={{ color: 'var(--accent-primary)' }}>*</span>
                 </label>
                 <textarea
                   required
                   rows={4}
-                  placeholder="Tell me about your project or opportunity..."
+                  placeholder="Tell me about your project, role, or how we can work together..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
+                    padding: '12px 14px',
                     borderRadius: '10px',
                     background: 'rgba(255, 255, 255, 0.04)',
                     border: '1px solid var(--border-subtle)',
                     color: 'var(--text-primary)',
-                    fontSize: '0.95rem',
+                    fontSize: '0.92rem',
                     fontFamily: 'inherit',
                     outline: 'none',
                     resize: 'vertical',
+                    minHeight: '110px',
+                    transition: 'border-color 0.2s',
                   }}
+                  onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
+                  onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
               </div>
 
@@ -370,14 +536,27 @@ export const ContactSection: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className="btn-primary"
-                style={{ width: '100%', padding: '14px', marginTop: '6px' }}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  marginTop: '4px',
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  opacity: isSubmitting ? 0.8 : 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                }}
               >
                 {isSubmitting ? (
-                  <span>Sending...</span>
+                  <>
+                    <RefreshCw size={18} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
+                    <span>Transmitting Message...</span>
+                  </>
                 ) : (
                   <>
                     <Send size={18} />
-                    <span>Send Message</span>
+                    <span>Send Message to {PERSONAL_INFO.name.split(' ')[0]}</span>
                   </>
                 )}
               </button>
@@ -388,3 +567,4 @@ export const ContactSection: React.FC = () => {
     </section>
   );
 };
+
