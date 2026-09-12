@@ -38,8 +38,8 @@ export const AboutSection: React.FC = () => {
     <section
       id="about"
       ref={sectionRef}
+      className="section-wrapper"
       style={{
-        padding: '110px 24px',
         maxWidth: '1140px',
         margin: '0 auto',
         position: 'relative',
@@ -47,7 +47,7 @@ export const AboutSection: React.FC = () => {
       }}
     >
       {/* Section Header */}
-      <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '50px' }}>
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,7 +66,7 @@ export const AboutSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 4.5vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.02em',
           }}
@@ -95,10 +95,10 @@ export const AboutSection: React.FC = () => {
         className="about-hero-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(320px, 380px) 1fr',
-          gap: '48px',
+          gridTemplateColumns: 'minmax(300px, 360px) 1fr',
+          gap: '40px',
           alignItems: 'center',
-          marginBottom: '48px',
+          marginBottom: '40px',
         }}
       >
         {/* ── Photo Column ── */}
@@ -110,7 +110,7 @@ export const AboutSection: React.FC = () => {
           style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
         >
           <motion.div
-            style={{ y: imgY, position: 'relative', width: '100%', maxWidth: '380px' }}
+            style={{ y: imgY, position: 'relative', width: '100%', maxWidth: '360px' }}
           >
             {/* Outer decorative ring */}
             <div
@@ -192,34 +192,6 @@ export const AboutSection: React.FC = () => {
                 }}
               />
             </div>
-
-            {/* Floating name badge at bottom of photo */}
-            {/* <div
-              style={{
-                position: 'absolute',
-                bottom: '18px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: 'rgba(5,7,12,0.92)',
-                backdropFilter: 'blur(14px)',
-                WebkitBackdropFilter: 'blur(14px)',
-                border: '1px solid rgba(52,211,153,0.35)',
-                borderRadius: '9999px',
-                padding: '7px 22px',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 18px rgba(0,0,0,0.5)',
-              }}
-            >
-              <span style={{
-                fontSize: '0.88rem',
-                fontWeight: 700,
-                fontFamily: 'var(--font-heading)',
-                color: '#f8fafc',
-                letterSpacing: '0.02em',
-              }}>
-                Anshika Pandey
-              </span>
-            </div> */}
           </motion.div>
         </motion.div>
 
@@ -229,15 +201,7 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="glass-panel"
-          style={{
-            padding: '40px 36px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '22px',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
+          className="glass-panel about-narrative-panel"
         >
           {/* Decorative glow */}
           <div style={{
@@ -254,23 +218,23 @@ export const AboutSection: React.FC = () => {
             }}>
               The Story So Far
             </span>
-            <h3 style={{ fontSize: '1.65rem', marginTop: '10px', marginBottom: '20px', lineHeight: 1.3 }}>
+            <h3 style={{ fontSize: 'clamp(1.35rem, 2.2vw, 1.65rem)', marginTop: '10px', marginBottom: '16px', lineHeight: 1.3 }}>
               Driven by curiosity, fueled by code, and dedicated to building things that matter.
             </h3>
 
-            <p style={{ marginBottom: '14px', lineHeight: 1.8, color: 'var(--text-secondary)' }}>
+            <p style={{ marginBottom: '14px', lineHeight: 1.75, color: 'var(--text-secondary)' }}>
               Hello! I'm <strong style={{ color: 'var(--text-primary)' }}>Anshika Pandey</strong>, a software developer currently pursuing my{' '}
               <strong style={{ color: '#38bdf8' }}>MCA (Master of Computer Applications)</strong>. My journey into programming began with a deep curiosity about how logic transforms into real-world interactive digital software.
             </p>
 
-            <p style={{ marginBottom: '14px', lineHeight: 1.8, color: 'var(--text-secondary)' }}>
+            <p style={{ marginBottom: '14px', lineHeight: 1.75, color: 'var(--text-secondary)' }}>
               I focus on the full lifecycle of software: architecting responsive UIs with{' '}
               <strong style={{ color: 'var(--text-primary)' }}>React</strong>, engineering robust backends with{' '}
               <strong style={{ color: 'var(--text-primary)' }}>Node.js & Express</strong>, and managing data with{' '}
               <strong style={{ color: 'var(--text-primary)' }}>MongoDB & SQL</strong>.
             </p>
 
-            <p style={{ lineHeight: 1.8, color: 'var(--text-secondary)' }}>
+            <p style={{ lineHeight: 1.75, color: 'var(--text-secondary)' }}>
               When I'm not shipping features, I sharpen my problem-solving on competitive coding platforms — optimizing algorithms in{' '}
               <strong style={{ color: '#34d399' }}>C++ and Java</strong>.
             </p>
@@ -278,11 +242,11 @@ export const AboutSection: React.FC = () => {
 
           {/* Tech badges */}
           <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: '10px',
-            paddingTop: '20px', borderTop: '1px solid var(--border-subtle)',
+            display: 'flex', flexWrap: 'wrap', gap: '8px',
+            paddingTop: '18px', borderTop: '1px solid var(--border-subtle)',
           }}>
             {['Clean Code', 'MERN Stack', 'C++ / DSA', 'REST APIs', 'Fast Learner'].map((tag) => (
-              <span key={tag} className="badge-tech" style={{ fontSize: '0.8rem' }}>
+              <span key={tag} className="badge-tech" style={{ fontSize: '0.78rem' }}>
                 <CheckCircle2 size={13} />
                 {tag}
               </span>
@@ -292,13 +256,7 @@ export const AboutSection: React.FC = () => {
       </div>
 
       {/* ── Bottom Row: Traits Grid ───────────────────────────────────────── */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '20px',
-        }}
-      >
+      <div className="about-traits-grid">
         {traits.map((trait, index) => (
           <motion.div
             key={trait.title}
@@ -306,11 +264,10 @@ export const AboutSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="glass-panel"
-            style={{ padding: '26px 24px', display: 'flex', flexDirection: 'column', gap: '14px' }}
+            className="glass-panel about-trait-card"
           >
             <div style={{
-              width: '46px', height: '46px', borderRadius: '13px',
+              width: '44px', height: '44px', borderRadius: '12px',
               background: `rgba(${trait.color === '#34d399' ? '16,185,129' : trait.color === '#38bdf8' ? '56,189,248' : '139,92,246'}, 0.1)`,
               border: `1px solid ${trait.color}30`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -318,26 +275,58 @@ export const AboutSection: React.FC = () => {
             }}>
               {trait.icon}
             </div>
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700 }}>{trait.title}</h4>
-            <p style={{ fontSize: '0.92rem', lineHeight: 1.65, color: 'var(--text-secondary)' }}>{trait.desc}</p>
+            <h4 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{trait.title}</h4>
+            <p style={{ fontSize: '0.88rem', lineHeight: 1.6, color: 'var(--text-secondary)' }}>{trait.desc}</p>
           </motion.div>
         ))}
       </div>
 
       {/* ── Responsive Styling ── */}
       <style>{`
+        .about-narrative-panel {
+          padding: 36px 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          position: relative;
+          overflow: hidden;
+        }
+        .about-traits-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+          gap: 18px;
+        }
+        .about-trait-card {
+          padding: 24px 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
         @media (max-width: 900px) {
           .about-hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 36px !important;
+            gap: 32px !important;
           }
           #about-photo-frame {
-            max-width: 320px !important;
+            max-width: 300px !important;
+          }
+          .about-narrative-panel {
+            padding: 26px 20px !important;
           }
         }
         @media (max-width: 480px) {
           #about-photo-frame {
-            max-width: 270px !important;
+            max-width: 250px !important;
+          }
+          .about-narrative-panel {
+            padding: 20px 16px !important;
+          }
+          .about-trait-card {
+            padding: 18px 16px !important;
+          }
+          .about-traits-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>

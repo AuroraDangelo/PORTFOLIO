@@ -48,8 +48,8 @@ export const ProjectsSection: React.FC = () => {
   return (
     <section
       id="projects"
+      className="section-wrapper"
       style={{
-        padding: '100px 24px',
         maxWidth: '1180px',
         margin: '0 auto',
         position: 'relative',
@@ -57,7 +57,7 @@ export const ProjectsSection: React.FC = () => {
       }}
     >
       {/* Section Header */}
-      <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '50px' }}>
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ export const ProjectsSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 4.5vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.02em',
           }}
@@ -91,8 +91,8 @@ export const ProjectsSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             maxWidth: '660px',
-            margin: '16px auto 0',
-            fontSize: '1.1rem',
+            margin: '14px auto 0',
+            fontSize: '1.05rem',
             color: 'var(--text-secondary)',
           }}
         >
@@ -101,7 +101,7 @@ export const ProjectsSection: React.FC = () => {
       </div>
 
       {/* Featured Projects (Editorial Layout) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', marginBottom: '60px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '36px', marginBottom: '60px' }}>
         {featuredProjects.map((project, index) => {
           const isReversed = index % 2 !== 0;
           return (
@@ -111,21 +111,11 @@ export const ProjectsSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.7, delay: index * 0.15 }}
-              className="glass-panel"
-              style={{
-                padding: '36px',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                gap: '36px',
-                alignItems: 'center',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
+              className={`glass-panel project-card-item ${isReversed ? 'is-reversed' : ''}`}
             >
-              {/* Left/Right Text Content */}
-              <div style={{ order: isReversed ? 2 : 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+              {/* Text Content */}
+              <div className="project-content-side">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
                   <span className="badge-tech" style={{ fontSize: '0.78rem' }}>
                     {project.category}
                   </span>
@@ -148,32 +138,32 @@ export const ProjectsSection: React.FC = () => {
 
                 <h3
                   style={{
-                    fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)',
+                    fontSize: 'clamp(1.5rem, 2.5vw, 2.1rem)',
                     fontWeight: 800,
-                    lineHeight: 1.2,
+                    lineHeight: 1.25,
                     marginBottom: '8px',
                   }}
                 >
                   {project.title}
                 </h3>
 
-                <p style={{ color: '#34d399', fontSize: '0.98rem', fontWeight: 500, marginBottom: '16px' }}>
+                <p style={{ color: '#34d399', fontSize: '0.96rem', fontWeight: 600, marginBottom: '14px' }}>
                   {project.tagline}
                 </p>
 
-                <p style={{ fontSize: '0.95rem', lineHeight: 1.7, marginBottom: '20px', color: 'var(--text-secondary)' }}>
+                <p style={{ fontSize: '0.94rem', lineHeight: 1.7, marginBottom: '18px', color: 'var(--text-secondary)' }}>
                   {project.description}
                 </p>
 
                 {/* Tech Badges */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '22px' }}>
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
                       style={{
                         padding: '4px 10px',
                         borderRadius: '6px',
-                        fontSize: '0.8rem',
+                        fontSize: '0.78rem',
                         fontFamily: 'var(--font-mono)',
                         background: 'var(--bg-card)',
                         border: '1px solid var(--border-subtle)',
@@ -186,11 +176,11 @@ export const ProjectsSection: React.FC = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                <div className="project-actions-group">
                   <button
                     onClick={() => setActiveProject(project)}
                     className="btn-primary"
-                    style={{ padding: '10px 20px', fontSize: '0.9rem' }}
+                    style={{ padding: '10px 18px', fontSize: '0.88rem' }}
                   >
                     <Info size={16} />
                     <span>Project Details</span>
@@ -202,7 +192,7 @@ export const ProjectsSection: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-secondary"
-                      style={{ padding: '10px 18px', fontSize: '0.9rem' }}
+                      style={{ padding: '10px 16px', fontSize: '0.88rem' }}
                     >
                       <ExternalLink size={15} />
                       <span>Live Demo</span>
@@ -214,7 +204,7 @@ export const ProjectsSection: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary"
-                    style={{ padding: '10px 18px', fontSize: '0.9rem' }}
+                    style={{ padding: '10px 16px', fontSize: '0.88rem' }}
                   >
                     <GithubIcon size={15} />
                     <span>GitHub</span>
@@ -223,40 +213,28 @@ export const ProjectsSection: React.FC = () => {
               </div>
 
               {/* Graphic Mockup Area */}
-              <div
-                style={{
-                  order: isReversed ? 1 : 2,
-                  borderRadius: '16px',
-                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(139, 92, 246, 0.08) 100%)',
-                  border: '1px solid var(--border-subtle)',
-                  padding: '28px 24px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  minHeight: '260px',
-                  boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div className="project-mockup-side">
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div
                       style={{
-                        width: '42px',
-                        height: '42px',
-                        borderRadius: '12px',
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
                         background: 'rgba(255, 255, 255, 0.06)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        flexShrink: 0,
                       }}
                     >
                       {getProjectIcon(project.id)}
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                         Architecture Preview
                       </div>
-                      <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                      <div style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
                         Production Ready
                       </div>
                     </div>
@@ -267,16 +245,17 @@ export const ProjectsSection: React.FC = () => {
                       fontSize: '0.8rem',
                       fontFamily: 'var(--font-mono)',
                       color: '#34d399',
+                      fontWeight: 700,
                     }}
                   >
                     0{index + 1}
                   </span>
                 </div>
 
-                <div style={{ margin: '20px 0' }}>
+                <div style={{ margin: '18px 0' }}>
                   <div
                     style={{
-                      fontSize: '0.85rem',
+                      fontSize: '0.8rem',
                       fontFamily: 'var(--font-mono)',
                       color: 'var(--text-muted)',
                       marginBottom: '10px',
@@ -289,15 +268,16 @@ export const ProjectsSection: React.FC = () => {
                       key={i}
                       style={{
                         display: 'flex',
-                        alignItems: 'center',
+                        alignItems: 'flex-start',
                         gap: '8px',
                         fontSize: '0.85rem',
+                        lineHeight: 1.5,
                         color: 'var(--text-secondary)',
-                        marginBottom: '6px',
+                        marginBottom: '8px',
                       }}
                     >
-                      <span style={{ color: '#34d399' }}>▹</span>
-                      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <span style={{ color: '#34d399', flexShrink: 0, marginTop: '1px' }}>▹</span>
+                      <span style={{ wordBreak: 'break-word' }}>
                         {h}
                       </span>
                     </div>
@@ -309,11 +289,13 @@ export const ProjectsSection: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingTop: '14px',
+                    paddingTop: '12px',
                     borderTop: '1px solid var(--border-subtle)',
-                    fontSize: '0.8rem',
+                    fontSize: '0.78rem',
                     color: 'var(--text-muted)',
                     fontFamily: 'var(--font-mono)',
+                    flexWrap: 'wrap',
+                    gap: '6px',
                   }}
                 >
                   <span>MERN / Modern Stack</span>
@@ -329,16 +311,10 @@ export const ProjectsSection: React.FC = () => {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
           <Sparkles size={18} className="text-cyan-400" />
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 700 }}>Additional Projects & Utilities</h3>
+          <h3 style={{ fontSize: '1.35rem', fontWeight: 700 }}>Additional Projects & Utilities</h3>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px',
-          }}
-        >
+        <div className="other-projects-grid">
           {otherProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -346,22 +322,15 @@ export const ProjectsSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass-panel"
-              style={{
-                padding: '28px 24px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '20px',
-              }}
+              className="glass-panel other-project-card"
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <div
                     style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '12px',
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '10px',
                       background: 'rgba(255, 255, 255, 0.05)',
                       display: 'flex',
                       alignItems: 'center',
@@ -371,7 +340,7 @@ export const ProjectsSection: React.FC = () => {
                     {getProjectIcon(project.id)}
                   </div>
 
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '6px' }}>
                     <a
                       href={project.githubUrl}
                       target="_blank"
@@ -405,15 +374,15 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                 </div>
 
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '6px' }}>{project.title}</h4>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '6px' }}>{project.title}</h4>
 
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                <p style={{ fontSize: '0.88rem', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '14px' }}>
                   {project.description}
                 </p>
               </div>
 
               <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '14px' }}>
                   {project.techStack.map((t) => (
                     <span
                       key={t}
@@ -458,6 +427,94 @@ export const ProjectsSection: React.FC = () => {
 
       {/* Modal View */}
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+
+      {/* Embedded Responsive Styles for Projects Section */}
+      <style>{`
+        .project-card-item {
+          padding: 36px;
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 32px;
+          align-items: center;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          position: relative;
+          overflow: hidden;
+        }
+        .project-card-item.is-reversed .project-content-side {
+          order: 2;
+        }
+        .project-card-item.is-reversed .project-mockup-side {
+          order: 1;
+        }
+        .project-mockup-side {
+          border-radius: 16px;
+          background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(139, 92, 246, 0.08) 100%);
+          border: 1px solid var(--border-subtle);
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          justifyContent: space-between;
+          min-height: 250px;
+          box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        .project-actions-group {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        .other-projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+          gap: 20px;
+        }
+        .other-project-card {
+          padding: 24px 20px;
+          display: flex;
+          flex-direction: column;
+          justifyContent: space-between;
+          gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+          .project-card-item {
+            grid-template-columns: 1fr !important;
+            padding: 26px 20px !important;
+            gap: 24px !important;
+          }
+          .project-card-item.is-reversed .project-content-side {
+            order: 1 !important;
+          }
+          .project-card-item.is-reversed .project-mockup-side {
+            order: 2 !important;
+          }
+          .project-mockup-side {
+            padding: 20px 16px !important;
+            min-height: auto !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .project-card-item {
+            padding: 20px 14px !important;
+            gap: 20px !important;
+          }
+          .project-actions-group {
+            width: 100%;
+          }
+          .project-actions-group button,
+          .project-actions-group a {
+            flex: 1 1 100% !important;
+            justify-content: center !important;
+            text-align: center !important;
+          }
+          .other-projects-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
+

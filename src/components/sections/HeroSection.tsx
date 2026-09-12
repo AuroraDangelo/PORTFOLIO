@@ -19,6 +19,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
   return (
     <section
       id="hero"
+      className="hero-section-container"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -26,7 +27,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        padding: '130px 24px 70px',
         textAlign: 'center',
         zIndex: 10,
       }}
@@ -38,7 +38,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '22px',
+          gap: '20px',
         }}
       >
         {/* Availability Badge with high-contrast text */}
@@ -50,9 +50,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '8px 20px',
+            padding: '7px 18px',
             borderRadius: '9999px',
-            fontSize: '0.82rem',
+            fontSize: '0.8rem',
             fontFamily: 'var(--font-mono)',
             fontWeight: 600,
             letterSpacing: '0.06em',
@@ -86,13 +86,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
         >
           <h1
             style={{
-              fontSize: 'clamp(2.8rem, 7.2vw, 5.8rem)',
+              fontSize: 'clamp(2.3rem, 7.5vw, 5.8rem)',
               fontWeight: 900,
               lineHeight: 1.05,
               letterSpacing: '-0.025em',
               fontFamily: 'var(--font-heading)',
               color: 'var(--text-primary)',
-              margin: '6px 0',
+              margin: '4px 0',
+              wordBreak: 'break-word',
             }}
           >
             ANSHIKA PANDEY
@@ -103,14 +104,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '12px',
+              gap: '10px',
               flexWrap: 'wrap',
-              marginTop: '10px',
+              marginTop: '8px',
             }}
           >
             <span
               style={{
-                fontSize: 'clamp(1.4rem, 3.2vw, 2.2rem)',
+                fontSize: 'clamp(1.3rem, 3.2vw, 2.2rem)',
                 fontWeight: 700,
                 color: '#38bdf8',
                 fontFamily: 'var(--font-heading)',
@@ -122,17 +123,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             </span>
           </div>
 
-          {/* Supporting Headline - High-Contrast Ice-Cyan/White with glowing emerald bullets */}
+          {/* Supporting Headline */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '10px',
+              gap: '8px',
               flexWrap: 'wrap',
-              marginTop: '10px',
+              marginTop: '8px',
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(0.9rem, 1.8vw, 1.15rem)',
+              fontSize: 'clamp(0.85rem, 1.8vw, 1.15rem)',
               fontWeight: 600,
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
@@ -154,7 +155,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
           style={{
             maxWidth: '680px',
-            fontSize: 'clamp(1.05rem, 1.8vw, 1.25rem)',
+            fontSize: 'clamp(0.98rem, 1.8vw, 1.25rem)',
             lineHeight: 1.7,
             color: 'var(--text-secondary)',
             fontWeight: 400,
@@ -168,19 +169,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.45, ease: 'easeOut' }}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '16px',
-            flexWrap: 'wrap',
-            marginTop: '8px',
-          }}
+          className="hero-cta-buttons"
         >
           <button
             onClick={() => scrollToSection('projects')}
             className="btn-primary"
-            style={{ minWidth: '170px' }}
+            style={{ minWidth: '160px' }}
           >
             <Sparkles size={18} />
             <span>View My Work</span>
@@ -189,7 +183,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           <button
             onClick={onOpenResumeModal}
             className="btn-secondary"
-            style={{ minWidth: '160px' }}
+            style={{ minWidth: '150px' }}
           >
             <span>View Resume</span>
             <ExternalLink size={16} />
@@ -205,8 +199,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '14px',
-            marginTop: '6px',
+            gap: '10px',
+            flexWrap: 'wrap',
+            marginTop: '4px',
           }}
         >
           <a
@@ -215,17 +210,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             rel="noopener noreferrer"
             className="glass-panel"
             style={{
-              padding: '10px 16px',
+              padding: '8px 14px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.9rem',
+              gap: '7px',
+              fontSize: '0.85rem',
               color: '#ffffff',
               borderRadius: '9999px',
             }}
             aria-label="GitHub Profile"
           >
-            <GithubIcon size={18} />
+            <GithubIcon size={16} />
             <span>GitHub</span>
           </a>
 
@@ -235,17 +230,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             rel="noopener noreferrer"
             className="glass-panel"
             style={{
-              padding: '10px 16px',
+              padding: '8px 14px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.9rem',
+              gap: '7px',
+              fontSize: '0.85rem',
               color: '#ffffff',
               borderRadius: '9999px',
             }}
             aria-label="LinkedIn Profile"
           >
-            <LinkedinIcon size={18} style={{ color: '#38bdf8' }} />
+            <LinkedinIcon size={16} style={{ color: '#38bdf8' }} />
             <span>LinkedIn</span>
           </a>
 
@@ -253,17 +248,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             href={`mailto:${PERSONAL_INFO.email}`}
             className="glass-panel"
             style={{
-              padding: '10px 16px',
+              padding: '8px 14px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.9rem',
+              gap: '7px',
+              fontSize: '0.85rem',
               color: '#ffffff',
               borderRadius: '9999px',
             }}
             aria-label="Send Email"
           >
-            <Mail size={18} style={{ color: '#34d399' }} />
+            <Mail size={16} style={{ color: '#34d399' }} />
             <span>Email</span>
           </a>
         </motion.div>
@@ -273,29 +268,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '16px',
-            width: '100%',
-            maxWidth: '860px',
-            marginTop: '28px',
-          }}
+          className="hero-metrics-grid"
         >
           <div
-            className="glass-panel"
-            style={{
-              padding: '18px 20px',
-              textAlign: 'left',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-            }}
+            className="glass-panel hero-metric-card"
           >
             <div
               style={{
-                width: '42px',
-                height: '42px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '12px',
                 background: 'rgba(16, 185, 129, 0.15)',
                 color: '#34d399',
@@ -305,32 +286,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
                 flexShrink: 0,
               }}
             >
-              <Code size={22} />
+              <Code size={20} />
             </div>
             <div>
-              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                 7+ Projects
               </div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                 MERN & Full-Stack
               </div>
             </div>
           </div>
 
           <div
-            className="glass-panel"
-            style={{
-              padding: '18px 20px',
-              textAlign: 'left',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-            }}
+            className="glass-panel hero-metric-card"
           >
             <div
               style={{
-                width: '42px',
-                height: '42px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '12px',
                 background: 'rgba(6, 182, 212, 0.15)',
                 color: '#06b6d4',
@@ -340,32 +314,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
                 flexShrink: 0,
               }}
             >
-              <Award size={22} />
+              <Award size={20} />
             </div>
             <div>
-              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                 MCA (2025–27)
               </div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                BCA First Class (2022–25)
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                BCA First Class
               </div>
             </div>
           </div>
 
           <div
-            className="glass-panel"
-            style={{
-              padding: '18px 20px',
-              textAlign: 'left',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-            }}
+            className="glass-panel hero-metric-card"
           >
             <div
               style={{
-                width: '42px',
-                height: '42px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '12px',
                 background: 'rgba(139, 92, 246, 0.15)',
                 color: '#a78bfa',
@@ -375,14 +342,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
                 flexShrink: 0,
               }}
             >
-              <Terminal size={22} />
+              <Terminal size={20} />
             </div>
             <div>
-              <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                 300+ Solved
               </div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                LeetCode & DSA Practice
+              <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                LeetCode & DSA
               </div>
             </div>
           </div>
@@ -394,23 +361,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        style={{
-          position: 'absolute',
-          bottom: '24px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-          cursor: 'pointer',
-        }}
+        className="hero-scroll-indicator"
         onClick={() => scrollToSection('about')}
         aria-label="Scroll to about section"
       >
         <span
           style={{
-            fontSize: '0.75rem',
+            fontSize: '0.72rem',
             fontFamily: 'var(--font-mono)',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
@@ -423,8 +380,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
           style={{
-            width: '28px',
-            height: '28px',
+            width: '26px',
+            height: '26px',
             borderRadius: '50%',
             background: 'var(--bg-card)',
             border: '1px solid var(--border-subtle)',
@@ -435,9 +392,79 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenResumeModal }) =
             boxShadow: '0 0 10px rgba(16, 185, 129, 0.2)',
           }}
         >
-          <ArrowDown size={14} />
+          <ArrowDown size={13} />
         </motion.div>
       </motion.div>
+
+      {/* Embedded Responsive Styles for Hero Section */}
+      <style>{`
+        .hero-section-container {
+          padding: 130px 24px 70px;
+        }
+        .hero-cta-buttons {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          flex-wrap: wrap;
+          margin-top: 6px;
+        }
+        .hero-metrics-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 14px;
+          width: 100%;
+          max-width: 860px;
+          margin-top: 24px;
+        }
+        .hero-metric-card {
+          padding: 16px 18px;
+          text-align: left;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .hero-scroll-indicator {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+          .hero-section-container {
+            padding: 100px 16px 60px !important;
+            min-height: auto !important;
+          }
+          .hero-metrics-grid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+            margin-top: 18px !important;
+          }
+          .hero-scroll-indicator {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-section-container {
+            padding: 90px 12px 40px !important;
+          }
+          .hero-cta-buttons {
+            width: 100%;
+          }
+          .hero-cta-buttons button {
+            width: 100% !important;
+            min-width: 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
+

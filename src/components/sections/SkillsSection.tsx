@@ -68,8 +68,8 @@ export const SkillsSection: React.FC = () => {
   return (
     <section
       id="skills"
+      className="section-wrapper"
       style={{
-        padding: '100px 24px',
         maxWidth: '1140px',
         margin: '0 auto',
         position: 'relative',
@@ -77,7 +77,7 @@ export const SkillsSection: React.FC = () => {
       }}
     >
       {/* Section Heading */}
-      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ export const SkillsSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 4.5vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.02em',
           }}
@@ -111,8 +111,8 @@ export const SkillsSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             maxWidth: '640px',
-            margin: '16px auto 0',
-            fontSize: '1.1rem',
+            margin: '14px auto 0',
+            fontSize: '1.05rem',
             color: 'var(--text-secondary)',
           }}
         >
@@ -121,33 +121,15 @@ export const SkillsSection: React.FC = () => {
       </div>
 
       {/* Category Filter Pills */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '10px',
-          marginBottom: '40px',
-        }}
-      >
+      <div className="skills-filter-container">
         {categories.map((cat) => {
           const isSelected = selectedCategory === cat.label;
           return (
             <button
               key={cat.label}
               onClick={() => setSelectedCategory(cat.label)}
+              className="skills-filter-btn"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '9px 18px',
-                borderRadius: '9999px',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                fontFamily: 'var(--font-heading)',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
                 background: isSelected
                   ? 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)'
                   : 'var(--bg-card)',
@@ -166,11 +148,7 @@ export const SkillsSection: React.FC = () => {
       {/* Skills Grid */}
       <motion.div
         layout
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-          gap: '20px',
-        }}
+        className="skills-grid"
       >
         <AnimatePresence>
           {filteredSkills.map((skill: SkillItem) => (
@@ -181,21 +159,13 @@ export const SkillsSection: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="glass-panel"
-              style={{
-                padding: '24px 20px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '14px',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
+              className="glass-panel skill-card-item"
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div
                   style={{
-                    width: '44px',
-                    height: '44px',
+                    width: '42px',
+                    height: '42px',
                     borderRadius: '12px',
                     background: 'rgba(255, 255, 255, 0.04)',
                     border: '1px solid var(--border-subtle)',
@@ -209,7 +179,7 @@ export const SkillsSection: React.FC = () => {
 
                 <span
                   style={{
-                    fontSize: '0.75rem',
+                    fontSize: '0.74rem',
                     fontFamily: 'var(--font-mono)',
                     padding: '3px 8px',
                     borderRadius: '6px',
@@ -223,14 +193,14 @@ export const SkillsSection: React.FC = () => {
               </div>
 
               <div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, margin: '0 0 6px' }}>{skill.name}</h3>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0 0 4px' }}>{skill.name}</h3>
+                <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                   {skill.category}
                 </span>
               </div>
 
               {skill.description && (
-                <p style={{ fontSize: '0.85rem', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
+                <p style={{ fontSize: '0.84rem', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
                   {skill.description}
                 </p>
               )}
@@ -238,6 +208,66 @@ export const SkillsSection: React.FC = () => {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Embedded Responsive Styles for Skills Section */}
+      <style>{`
+        .skills-filter-container {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-bottom: 36px;
+        }
+        .skills-filter-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 8px 16px;
+          border-radius: 9999px;
+          font-size: 0.88rem;
+          font-weight: 600;
+          font-family: var(--font-heading);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+          gap: 18px;
+        }
+        .skill-card-item {
+          padding: 22px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        @media (max-width: 600px) {
+          .skills-filter-container {
+            justify-content: flex-start;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+          }
+          .skills-filter-btn {
+            white-space: nowrap;
+            padding: 7px 14px !important;
+            font-size: 0.82rem !important;
+          }
+          .skills-grid {
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)) !important;
+            gap: 12px !important;
+          }
+          .skill-card-item {
+            padding: 16px 14px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
+

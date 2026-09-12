@@ -7,8 +7,8 @@ export const JourneySection: React.FC = () => {
   return (
     <section
       id="journey"
+      className="section-wrapper"
       style={{
-        padding: '100px 24px',
         maxWidth: '1000px',
         margin: '0 auto',
         position: 'relative',
@@ -16,7 +16,7 @@ export const JourneySection: React.FC = () => {
       }}
     >
       {/* Section Header */}
-      <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '50px' }}>
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export const JourneySection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 4.5vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.02em',
           }}
@@ -50,8 +50,8 @@ export const JourneySection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             maxWidth: '620px',
-            margin: '16px auto 0',
-            fontSize: '1.1rem',
+            margin: '14px auto 0',
+            fontSize: '1.05rem',
             color: 'var(--text-secondary)',
           }}
         >
@@ -60,26 +60,11 @@ export const JourneySection: React.FC = () => {
       </div>
 
       {/* Cinematic Timeline */}
-      <div
-        style={{
-          position: 'relative',
-          paddingLeft: '32px',
-        }}
-      >
+      <div className="journey-timeline-container">
         {/* Animated Central Glowing Line */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            bottom: '10px',
-            left: '11px',
-            width: '2px',
-            background: 'linear-gradient(180deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%)',
-            boxShadow: '0 0 12px rgba(16, 185, 129, 0.6)',
-          }}
-        />
+        <div className="journey-timeline-line" />
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
           {JOURNEY_DATA.map((milestone, index) => (
             <motion.div
               key={milestone.degree}
@@ -91,27 +76,16 @@ export const JourneySection: React.FC = () => {
             >
               {/* Timeline Node Dot */}
               <div
+                className="journey-node-dot"
                 style={{
-                  position: 'absolute',
-                  left: '-32px',
-                  top: '24px',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  background: 'var(--bg-primary)',
                   border: `3px solid ${index === 0 ? '#10b981' : '#06b6d4'}`,
                   boxShadow: `0 0 15px ${index === 0 ? '#10b981' : '#06b6d4'}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: 'translateX(-50%)',
-                  zIndex: 2,
                 }}
               >
                 <div
                   style={{
-                    width: '8px',
-                    height: '8px',
+                    width: '7px',
+                    height: '7px',
                     borderRadius: '50%',
                     background: index === 0 ? '#10b981' : '#06b6d4',
                   }}
@@ -119,14 +93,7 @@ export const JourneySection: React.FC = () => {
               </div>
 
               {/* Milestone Card */}
-              <div
-                className="glass-panel"
-                style={{
-                  padding: '32px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
+              <div className="glass-panel journey-milestone-card">
                 {/* Status & Period Badge */}
                 <div
                   style={{
@@ -135,25 +102,25 @@ export const JourneySection: React.FC = () => {
                     justifyContent: 'space-between',
                     flexWrap: 'wrap',
                     gap: '10px',
-                    marginBottom: '16px',
+                    marginBottom: '14px',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                     <span
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
-                        fontSize: '0.85rem',
+                        fontSize: '0.82rem',
                         fontFamily: 'var(--font-mono)',
                         color: '#34d399',
-                        padding: '4px 12px',
+                        padding: '4px 10px',
                         borderRadius: '9999px',
                         background: 'rgba(16, 185, 129, 0.1)',
                         border: '1px solid rgba(16, 185, 129, 0.25)',
                       }}
                     >
-                      <Calendar size={14} />
+                      <Calendar size={13} />
                       {milestone.period}
                     </span>
 
@@ -162,7 +129,7 @@ export const JourneySection: React.FC = () => {
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px',
-                        fontSize: '0.8rem',
+                        fontSize: '0.78rem',
                         color: 'var(--text-muted)',
                       }}
                     >
@@ -173,9 +140,9 @@ export const JourneySection: React.FC = () => {
 
                   <span
                     style={{
-                      fontSize: '0.78rem',
+                      fontSize: '0.76rem',
                       fontFamily: 'var(--font-mono)',
-                      padding: '4px 10px',
+                      padding: '4px 9px',
                       borderRadius: '6px',
                       background: milestone.status === 'In Progress' ? 'rgba(56, 189, 248, 0.15)' : 'rgba(16, 185, 129, 0.15)',
                       color: milestone.status === 'In Progress' ? '#38bdf8' : '#34d399',
@@ -188,30 +155,23 @@ export const JourneySection: React.FC = () => {
 
                 <h3
                   style={{
-                    fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
+                    fontSize: 'clamp(1.35rem, 2.4vw, 1.75rem)',
                     fontWeight: 800,
                     marginBottom: '8px',
+                    lineHeight: 1.3,
                   }}
                 >
                   {milestone.title}
                 </h3>
 
-                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '24px' }}>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '20px', fontSize: '0.94rem' }}>
                   {milestone.description}
                 </p>
 
                 {/* Grid for Learnings and Achievements */}
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '20px',
-                    paddingTop: '20px',
-                    borderTop: '1px solid var(--border-subtle)',
-                  }}
-                >
+                <div className="journey-subgrid">
                   {/* Learnings */}
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <div
                       style={{
                         display: 'flex',
@@ -235,20 +195,20 @@ export const JourneySection: React.FC = () => {
                             display: 'flex',
                             alignItems: 'flex-start',
                             gap: '8px',
-                            fontSize: '0.88rem',
+                            fontSize: '0.86rem',
                             color: 'var(--text-secondary)',
                             lineHeight: 1.5,
                           }}
                         >
-                          <span style={{ color: '#10b981', marginTop: '1px' }}>▹</span>
-                          <span>{item}</span>
+                          <span style={{ color: '#10b981', marginTop: '1px', flexShrink: 0 }}>▹</span>
+                          <span style={{ wordBreak: 'break-word' }}>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   {/* Highlights */}
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <div
                       style={{
                         display: 'flex',
@@ -272,13 +232,13 @@ export const JourneySection: React.FC = () => {
                             display: 'flex',
                             alignItems: 'flex-start',
                             gap: '8px',
-                            fontSize: '0.88rem',
+                            fontSize: '0.86rem',
                             color: 'var(--text-secondary)',
                             lineHeight: 1.5,
                           }}
                         >
-                          <span style={{ color: '#06b6d4', marginTop: '1px' }}>▹</span>
-                          <span>{item}</span>
+                          <span style={{ color: '#06b6d4', marginTop: '1px', flexShrink: 0 }}>▹</span>
+                          <span style={{ wordBreak: 'break-word' }}>{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -289,6 +249,89 @@ export const JourneySection: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Embedded Responsive Styles for Journey Section */}
+      <style>{`
+        .journey-timeline-container {
+          position: relative;
+          padding-left: 32px;
+        }
+        .journey-timeline-line {
+          position: absolute;
+          top: 10px;
+          bottom: 10px;
+          left: 11px;
+          width: 2px;
+          background: linear-gradient(180deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%);
+          box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+        }
+        .journey-node-dot {
+          position: absolute;
+          left: -32px;
+          top: 24px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: var(--bg-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform: translateX(-50%);
+          z-index: 2;
+        }
+        .journey-milestone-card {
+          padding: 30px;
+          position: relative;
+          overflow: hidden;
+        }
+        .journey-subgrid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+          padding-top: 18px;
+          border-top: 1px solid var(--border-subtle);
+        }
+
+        @media (max-width: 768px) {
+          .journey-timeline-container {
+            padding-left: 24px !important;
+          }
+          .journey-timeline-line {
+            left: 7px !important;
+          }
+          .journey-node-dot {
+            left: -24px !important;
+            width: 18px !important;
+            height: 18px !important;
+            top: 20px !important;
+          }
+          .journey-milestone-card {
+            padding: 22px 16px !important;
+          }
+          .journey-subgrid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .journey-timeline-container {
+            padding-left: 18px !important;
+          }
+          .journey-timeline-line {
+            left: 5px !important;
+          }
+          .journey-node-dot {
+            left: -18px !important;
+            width: 15px !important;
+            height: 15px !important;
+            top: 18px !important;
+          }
+          .journey-milestone-card {
+            padding: 18px 12px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

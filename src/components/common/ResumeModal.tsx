@@ -32,6 +32,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   return (
     <AnimatePresence>
       <div
+        className="resume-modal-backdrop"
         style={{
           position: 'fixed',
           inset: 0,
@@ -39,7 +40,6 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '16px',
           background: 'rgba(5, 7, 12, 0.90)',
           backdropFilter: 'blur(18px)',
           WebkitBackdropFilter: 'blur(18px)',
@@ -51,52 +51,27 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 24 }}
           transition={{ duration: 0.28, ease: 'easeOut' }}
-          style={{
-            width: '100%',
-            maxWidth: '900px',
-            height: '92vh',
-            display: 'flex',
-            flexDirection: 'column',
-            background: '#0a0d16',
-            border: '1px solid rgba(52,211,153,0.35)',
-            borderRadius: '18px',
-            boxShadow: '0 30px 80px rgba(0,0,0,0.85), 0 0 40px rgba(16,185,129,0.15)',
-            overflow: 'hidden',
-            position: 'relative',
-          }}
+          className="resume-modal-window"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Top toolbar */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '14px 22px',
-              borderBottom: '1px solid rgba(255,255,255,0.07)',
-              background: 'rgba(10,13,22,0.98)',
-              flexShrink: 0,
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
-              <FileText size={18} color="#34d399" />
-              <span style={{
-                fontFamily: 'var(--font-heading)', fontWeight: 700,
-                fontSize: '1.05rem', color: '#f8fafc',
-              }}>
+          <div className="resume-modal-toolbar">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+              <FileText size={18} color="#34d399" style={{ flexShrink: 0 }} />
+              <span className="resume-modal-title">
                 Curriculum Vitae — Anshika Pandey
               </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
               {/* Open in new tab */}
               <button
                 onClick={handleOpenInTab}
                 className="btn-secondary"
-                style={{ padding: '7px 14px', fontSize: '0.82rem', gap: '6px' }}
+                style={{ padding: '6px 12px', fontSize: '0.8rem', gap: '5px' }}
                 title="Open PDF in new tab"
               >
-                <ExternalLink size={14} />
+                <ExternalLink size={13} />
                 <span>Open</span>
               </button>
 
@@ -104,26 +79,32 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <button
                 onClick={handleDownload}
                 className="btn-primary"
-                style={{ padding: '7px 16px', fontSize: '0.82rem', gap: '6px' }}
+                style={{ padding: '6px 14px', fontSize: '0.8rem', gap: '5px' }}
               >
-                {downloaded ? <Check size={15} /> : <Download size={15} />}
-                <span>{downloaded ? 'Saved!' : 'Download PDF'}</span>
+                {downloaded ? <Check size={14} /> : <Download size={14} />}
+                <span>{downloaded ? 'Saved!' : 'Download'}</span>
               </button>
 
               {/* Close */}
               <button
                 onClick={onClose}
                 style={{
-                  width: '34px', height: '34px', borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
                   background: 'rgba(255,255,255,0.06)',
                   border: '1px solid rgba(255,255,255,0.1)',
-                  color: '#94a3b8', display: 'flex',
-                  alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', transition: 'all 0.2s',
+                  color: '#94a3b8',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  flexShrink: 0,
                 }}
                 aria-label="Close modal"
               >
-                <X size={17} />
+                <X size={16} />
               </button>
             </div>
           </div>
@@ -141,6 +122,60 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           />
         </motion.div>
       </div>
+
+      <style>{`
+        .resume-modal-backdrop {
+          padding: 16px;
+        }
+        .resume-modal-window {
+          width: 100%;
+          maxWidth: 900px;
+          height: 92vh;
+          display: flex;
+          flex-direction: column;
+          background: #0a0d16;
+          border: 1px solid rgba(52,211,153,0.35);
+          border-radius: 18px;
+          box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 40px rgba(16,185,129,0.15);
+          overflow: hidden;
+          position: relative;
+        }
+        .resume-modal-toolbar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 12px 20px;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+          background: rgba(10,13,22,0.98);
+          flex-shrink: 0;
+          gap: 10px;
+        }
+        .resume-modal-title {
+          font-family: var(--font-heading);
+          font-weight: 700;
+          font-size: 1rem;
+          color: #f8fafc;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        @media (max-width: 600px) {
+          .resume-modal-backdrop {
+            padding: 8px;
+          }
+          .resume-modal-window {
+            height: 94vh !important;
+            border-radius: 14px !important;
+          }
+          .resume-modal-toolbar {
+            padding: 10px 14px !important;
+          }
+          .resume-modal-title {
+            font-size: 0.88rem !important;
+          }
+        }
+      `}</style>
     </AnimatePresence>
   );
 };

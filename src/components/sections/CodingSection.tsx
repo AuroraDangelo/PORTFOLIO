@@ -61,8 +61,8 @@ export const CodingSection: React.FC = () => {
   return (
     <section
       id="code"
+      className="section-wrapper"
       style={{
-        padding: '100px 24px',
         maxWidth: '1140px',
         margin: '0 auto',
         position: 'relative',
@@ -89,7 +89,7 @@ export const CodingSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
-            fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 4.5vw, 3.5rem)',
             fontWeight: 800,
             letterSpacing: '-0.02em',
           }}
@@ -104,8 +104,8 @@ export const CodingSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{
             maxWidth: '620px',
-            margin: '16px auto 0',
-            fontSize: '1.1rem',
+            margin: '14px auto 0',
+            fontSize: '1.05rem',
             color: 'var(--text-secondary)',
           }}
         >
@@ -113,29 +113,15 @@ export const CodingSection: React.FC = () => {
         </motion.p>
       </div>
 
-      {/* Grid: LeetCode & GitHub & GeeksforGeeks Dashboard */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '28px',
-          marginBottom: '36px',
-        }}
-      >
+      {/* Grid: LeetCode & GitHub Dashboard */}
+      <div className="coding-cards-grid">
         {/* LeetCode Widget */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass-panel"
-          style={{
-            padding: '32px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: '24px',
-          }}
+          className="glass-panel coding-card"
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
@@ -150,13 +136,14 @@ export const CodingSection: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    flexShrink: 0,
                   }}
                 >
                   <Flame size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>LeetCode</h3>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>LeetCode</h3>
+                  <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                     @anshikapandey04
                   </span>
                 </div>
@@ -170,22 +157,22 @@ export const CodingSection: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   color: '#34d399',
                   fontFamily: 'var(--font-mono)',
                 }}
               >
                 <span>Profile</span>
-                <ExternalLink size={14} />
+                <ExternalLink size={13} />
               </a>
             </div>
 
             {/* Total Solved Big Display */}
-            <div style={{ margin: '20px 0' }}>
-              <div style={{ fontSize: '2.8rem', fontWeight: 900, lineHeight: 1, color: 'var(--text-primary)' }}>
+            <div style={{ margin: '18px 0' }}>
+              <div style={{ fontSize: 'clamp(2.3rem, 4vw, 2.8rem)', fontWeight: 900, lineHeight: 1, color: 'var(--text-primary)' }}>
                 {CODING_STATS_DATA.leetCode.totalSolved}+
               </div>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                 Problems Resolved & Optimized
               </span>
             </div>
@@ -194,7 +181,7 @@ export const CodingSection: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {/* Easy */}
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.84rem', marginBottom: '4px' }}>
                   <span style={{ color: '#34d399', fontWeight: 600 }}>Easy</span>
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.easy}</span>
                 </div>
@@ -205,7 +192,7 @@ export const CodingSection: React.FC = () => {
 
               {/* Medium */}
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.84rem', marginBottom: '4px' }}>
                   <span style={{ color: '#fbbf24', fontWeight: 600 }}>Medium</span>
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.medium}</span>
                 </div>
@@ -216,7 +203,7 @@ export const CodingSection: React.FC = () => {
 
               {/* Hard */}
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.84rem', marginBottom: '4px' }}>
                   <span style={{ color: '#f87171', fontWeight: 600 }}>Hard</span>
                   <span style={{ fontFamily: 'var(--font-mono)' }}>{CODING_STATS_DATA.leetCode.hard}</span>
                 </div>
@@ -234,8 +221,10 @@ export const CodingSection: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               color: 'var(--text-muted)',
+              flexWrap: 'wrap',
+              gap: '6px',
             }}
           >
             <span>Track: <strong style={{ color: '#38bdf8' }}>DSA & Problem Solving</strong></span>
@@ -249,14 +238,7 @@ export const CodingSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="glass-panel"
-          style={{
-            padding: '32px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: '24px',
-          }}
+          className="glass-panel coding-card"
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
@@ -271,13 +253,14 @@ export const CodingSection: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    flexShrink: 0,
                   }}
                 >
                   <GithubIcon size={20} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>GitHub Activity</h3>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>GitHub Activity</h3>
+                  <span style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                     @AuroraDangelo
                   </span>
                 </div>
@@ -291,47 +274,47 @@ export const CodingSection: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '4px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   color: '#34d399',
                   fontFamily: 'var(--font-mono)',
                 }}
               >
                 <span>Profile</span>
-                <ExternalLink size={14} />
+                <ExternalLink size={13} />
               </a>
             </div>
 
             {/* Quick Stat Tiles */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', margin: '20px 0' }}>
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', margin: '18px 0' }}>
+              <div style={{ padding: '10px 8px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
+                <div style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.45rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
                   {CODING_STATS_DATA.github.publicRepos}
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Repositories</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Repositories</div>
               </div>
 
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#38bdf8' }}>
+              <div style={{ padding: '10px 8px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
+                <div style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.45rem)', fontWeight: 800, color: '#38bdf8' }}>
                   {totalCommits}+
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Contributions</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Contributions</div>
               </div>
 
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#a78bfa' }}>
+              <div style={{ padding: '10px 8px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.03)', textAlign: 'center' }}>
+                <div style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.45rem)', fontWeight: 800, color: '#a78bfa' }}>
                   {CODING_STATS_DATA.geeksForGeeks.solvedProblems}+
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>GFG Solved</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>GFG Solved</div>
               </div>
             </div>
 
             {/* Real GitHub Contribution Matrix */}
-            <div style={{ marginTop: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ marginTop: '14px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '4px' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                   Contribution Heatmap
                 </span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
                   <span>Less</span>
                   {[0, 1, 2, 3, 4].map((lvl) => (
                     <div
@@ -353,21 +336,22 @@ export const CodingSection: React.FC = () => {
                   display: 'grid',
                   gridAutoFlow: 'column',
                   gridTemplateRows: 'repeat(7, 1fr)',
-                  gap: '4px',
-                  padding: '12px',
+                  gap: '3px',
+                  padding: '10px',
                   borderRadius: '12px',
                   background: 'rgba(5, 7, 12, 0.5)',
                   border: '1px solid var(--border-subtle)',
                   overflowX: 'auto',
+                  WebkitOverflowScrolling: 'touch',
                 }}
               >
                 {displayDays.map((day) => (
                   <div
                     key={day.date}
                     style={{
-                      width: '12px',
-                      height: '12px',
-                      borderRadius: '2.5px',
+                      width: '11px',
+                      height: '11px',
+                      borderRadius: '2px',
                       background: getHeatmapColor(day.level),
                       cursor: 'pointer',
                       transition: 'transform 0.15s ease, filter 0.15s ease',
@@ -394,8 +378,10 @@ export const CodingSection: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: '0.85rem',
+              fontSize: '0.82rem',
               color: 'var(--text-muted)',
+              flexWrap: 'wrap',
+              gap: '6px',
             }}
           >
             <span>Primary Languages: <strong style={{ color: 'var(--text-primary)' }}>JS, C++, Java</strong></span>
@@ -403,6 +389,40 @@ export const CodingSection: React.FC = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Embedded Responsive Styles for Coding Section */}
+      <style>{`
+        .coding-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+          gap: 24px;
+          margin-bottom: 36px;
+        }
+        .coding-card {
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justifyContent: space-between;
+          gap: 22px;
+        }
+
+        @media (max-width: 768px) {
+          .coding-cards-grid {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          .coding-card {
+            padding: 22px 16px !important;
+            gap: 18px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .coding-card {
+            padding: 18px 12px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };

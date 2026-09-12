@@ -328,6 +328,45 @@ a {
   }
 }
 
+/* Responsive Utilities & Section Adapters */
+.section-wrapper {
+  padding: 100px 24px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .section-wrapper {
+    padding: 70px 16px !important;
+  }
+
+  .glass-panel {
+    border-radius: var(--radius-md) !important;
+  }
+
+  p {
+    font-size: 0.98rem !important;
+    line-height: 1.65 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-wrapper {
+    padding: 55px 12px !important;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 10px 18px !important;
+    font-size: 0.9rem !important;
+  }
+
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+  }
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -337,3 +376,4 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
