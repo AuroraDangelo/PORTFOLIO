@@ -127,75 +127,46 @@ export const ContactSection: React.FC = () => {
       <div className="contact-cards-grid">
         {/* Left Column: Direct Info & Quick Copy */}
         <motion.div
-          initial={{ opacity: 0, x: -25 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
           className="glass-panel contact-card-panel"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: '24px',
-          }}
         >
           <div>
             <span
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 color: '#34d399',
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em',
+                fontWeight: 600,
               }}
             >
               Direct Communication
             </span>
 
-            <h3 style={{ fontSize: 'clamp(1.45rem, 2.5vw, 1.75rem)', fontWeight: 800, marginTop: '8px', marginBottom: '14px' }}>
+            <h3 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.75rem)', fontWeight: 800, marginTop: '8px', marginBottom: '12px', lineHeight: 1.25 }}>
               Let's connect & collaborate.
             </h3>
 
-            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '20px', fontSize: '0.94rem' }}>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '18px', fontSize: '0.92rem' }}>
               I am actively seeking software engineering internships and junior developer opportunities where I can contribute to high-impact systems.
             </p>
 
             {/* Email Copy Card */}
-            <div
-              className="contact-email-box"
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
+            <div className="contact-email-box">
+              <div className="contact-email-content">
                 <Mail size={18} style={{ color: '#10b981', flexShrink: 0 }} />
-                <span
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.88rem',
-                    color: 'var(--text-primary)',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
+                <span className="contact-email-text">
                   {PERSONAL_INFO.email}
                 </span>
               </div>
 
               <button
                 onClick={handleCopyEmail}
-                style={{
-                  padding: '7px 12px',
-                  borderRadius: '8px',
-                  background: copied ? 'rgba(16, 185, 129, 0.2)' : 'var(--bg-card)',
-                  border: '1px solid var(--border-subtle)',
-                  color: copied ? '#34d399' : 'var(--text-primary)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '0.8rem',
-                  transition: 'all 0.2s ease',
-                  flexShrink: 0,
-                }}
+                className="contact-copy-btn"
                 aria-label="Copy email address"
               >
                 {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -203,28 +174,19 @@ export const ContactSection: React.FC = () => {
               </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
-              <MapPin size={15} className="text-cyan-400" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.86rem', marginTop: '12px' }}>
+              <MapPin size={15} className="text-cyan-400" style={{ flexShrink: 0 }} />
               <span>Based in India • Available Worldwide</span>
             </div>
           </div>
 
           {/* Social Links Bar */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '10px',
-              paddingTop: '18px',
-              borderTop: '1px solid var(--border-subtle)',
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="contact-social-bar">
             <a
               href={PERSONAL_INFO.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary"
-              style={{ flex: '1 1 120px', padding: '9px 12px', fontSize: '0.85rem' }}
+              className="btn-secondary contact-social-btn"
             >
               <GithubIcon size={16} />
               <span>GitHub</span>
@@ -234,8 +196,7 @@ export const ContactSection: React.FC = () => {
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary"
-              style={{ flex: '1 1 120px', padding: '9px 12px', fontSize: '0.85rem' }}
+              className="btn-secondary contact-social-btn"
             >
               <LinkedinIcon size={16} style={{ color: '#0ea5e9' }} />
               <span>LinkedIn</span>
@@ -245,19 +206,19 @@ export const ContactSection: React.FC = () => {
 
         {/* Right Column: Contact Message Form */}
         <motion.div
-          initial={{ opacity: 0, x: 25 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
           className="glass-panel contact-card-panel"
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '8px' }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>
+            <h3 style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.45rem)', fontWeight: 800, margin: 0 }}>
               Send a Direct Message
             </h3>
             <span
               style={{
-                fontSize: '0.74rem',
+                fontSize: '0.72rem',
                 fontFamily: 'var(--font-mono)',
                 color: 'var(--accent-primary)',
                 background: 'rgba(56, 189, 248, 0.1)',
@@ -276,7 +237,7 @@ export const ContactSection: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4 }}
               style={{
-                padding: '32px 20px',
+                padding: '28px 16px',
                 borderRadius: '14px',
                 background: 'rgba(16, 185, 129, 0.1)',
                 border: '1px solid rgba(16, 185, 129, 0.3)',
@@ -377,18 +338,7 @@ export const ContactSection: React.FC = () => {
                     placeholder="e.g. Sarah / Tech Recruiter"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '11px 14px',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.92rem',
-                      fontFamily: 'inherit',
-                      outline: 'none',
-                      transition: 'border-color 0.2s',
-                    }}
+                    className="contact-input-field"
                     onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
                     onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                   />
@@ -404,8 +354,7 @@ export const ContactSection: React.FC = () => {
                       marginBottom: '6px',
                     }}
                   >
-                    Your Email <span style={{ color: 'var(--accent-primary)' }}>*</span>{' '}
-                    <span style={{ fontSize: '0.72rem', opacity: 0.7 }}>(for reply)</span>
+                    Your Email <span style={{ color: 'var(--accent-primary)' }}>*</span>
                   </label>
                   <input
                     type="email"
@@ -413,18 +362,7 @@ export const ContactSection: React.FC = () => {
                     placeholder="your.email@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    style={{
-                      width: '100%',
-                      padding: '11px 14px',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                      fontSize: '0.92rem',
-                      fontFamily: 'inherit',
-                      outline: 'none',
-                      transition: 'border-color 0.2s',
-                    }}
+                    className="contact-input-field"
                     onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
                     onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                   />
@@ -448,18 +386,7 @@ export const ContactSection: React.FC = () => {
                   placeholder="e.g. Internship Opportunity / Project Collaboration"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '11px 14px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.92rem',
-                    fontFamily: 'inherit',
-                    outline: 'none',
-                    transition: 'border-color 0.2s',
-                  }}
+                  className="contact-input-field"
                   onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
                   onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
                 />
@@ -483,19 +410,10 @@ export const ContactSection: React.FC = () => {
                   placeholder="Tell me about your project, role, or how we can work together..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="contact-input-field"
                   style={{
-                    width: '100%',
-                    padding: '11px 14px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.04)',
-                    border: '1px solid var(--border-subtle)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.92rem',
-                    fontFamily: 'inherit',
-                    outline: 'none',
                     resize: 'vertical',
                     minHeight: '100px',
-                    transition: 'border-color 0.2s',
                   }}
                   onFocus={(e) => (e.target.style.borderColor = 'var(--accent-primary)')}
                   onBlur={(e) => (e.target.style.borderColor = 'var(--border-subtle)')}
@@ -508,7 +426,7 @@ export const ContactSection: React.FC = () => {
                 className="btn-primary"
                 style={{
                   width: '100%',
-                  padding: '13px',
+                  padding: '13px 16px',
                   marginTop: '4px',
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   opacity: isSubmitting ? 0.8 : 1,
@@ -527,7 +445,7 @@ export const ContactSection: React.FC = () => {
                 ) : (
                   <>
                     <Send size={17} />
-                    <span>Send Message to {PERSONAL_INFO.name.split(' ')[0]}</span>
+                    <span>Send Message</span>
                   </>
                 )}
               </button>
@@ -540,49 +458,138 @@ export const ContactSection: React.FC = () => {
       <style>{`
         .contact-cards-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-          gap: 32px;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 28px;
           align-items: stretch;
         }
         .contact-card-panel {
-          padding: 34px;
+          padding: 32px;
+          display: flex;
+          flex-direction: column;
+          justifyContent: space-between;
+          gap: 24px;
         }
         .contact-email-box {
-          padding: 14px 18px;
-          border-radius: 14px;
+          padding: 12px 16px;
+          border-radius: 12px;
           background: rgba(255, 255, 255, 0.03);
           border: 1px solid var(--border-subtle);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 12px;
-          margin-bottom: 18px;
+          gap: 10px;
+          margin-top: 14px;
+        }
+        .contact-email-content {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          min-width: 0;
+          flex: 1;
+        }
+        .contact-email-text {
+          font-family: var(--font-mono);
+          font-size: 0.88rem;
+          color: var(--text-primary);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .contact-copy-btn {
+          padding: 7px 12px;
+          border-radius: 8px;
+          background: var(--bg-card);
+          border: 1px solid var(--border-subtle);
+          color: var(--text-primary);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.8rem;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+        .contact-social-bar {
+          display: flex;
+          gap: 10px;
+          padding-top: 18px;
+          border-top: 1px solid var(--border-subtle);
+          flex-wrap: wrap;
+        }
+        .contact-social-btn {
+          flex: 1 1 120px;
+          padding: 9px 12px;
+          font-size: 0.85rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
         }
         .contact-form-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 12px;
         }
+        .contact-input-field {
+          width: 100%;
+          padding: 11px 14px;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid var(--border-subtle);
+          color: var(--text-primary);
+          font-size: 16px;
+          font-family: inherit;
+          outline: none;
+          transition: border-color 0.2s;
+          box-sizing: border-box;
+        }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .contact-cards-grid {
             grid-template-columns: 1fr !important;
-            gap: 24px !important;
+            gap: 20px !important;
           }
           .contact-card-panel {
             padding: 24px 18px !important;
+            gap: 20px !important;
           }
+        }
+
+        @media (max-width: 600px) {
           .contact-form-row {
             grid-template-columns: 1fr !important;
+          }
+          .contact-email-box {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            padding: 12px 14px !important;
+          }
+          .contact-email-content {
+            justify-content: flex-start;
+          }
+          .contact-email-text {
+            font-size: 0.82rem !important;
+            word-break: break-all;
+            white-space: normal;
+          }
+          .contact-copy-btn {
+            justify-content: center;
+            width: 100%;
+            padding: 8px 12px !important;
+          }
+          .contact-social-bar {
+            flex-direction: column;
+          }
+          .contact-social-btn {
+            width: 100% !important;
+            flex: 1 1 auto;
           }
         }
 
         @media (max-width: 480px) {
           .contact-card-panel {
-            padding: 20px 14px !important;
-          }
-          .contact-email-box {
-            padding: 12px 14px !important;
+            padding: 18px 14px !important;
           }
         }
       `}</style>

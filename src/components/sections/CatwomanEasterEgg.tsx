@@ -74,8 +74,9 @@ export const CatwomanEasterEgg: React.FC = () => {
             exit={{ opacity: 0, scale: 0.92 }}
             style={{
               pointerEvents: 'auto',
-              maxWidth: '380px',
-              padding: '12px 20px',
+              maxWidth: 'min(360px, 90vw)',
+              width: 'max-content',
+              padding: '12px 18px',
               borderRadius: '18px',
               background: 'rgba(8, 12, 22, 0.93)',
               backdropFilter: 'blur(18px)',
@@ -85,10 +86,11 @@ export const CatwomanEasterEgg: React.FC = () => {
               marginBottom: '14px',
               textAlign: 'center',
               position: 'relative',
+              boxSizing: 'border-box',
             }}
           >
             <p style={{
-              fontSize: '0.95rem', fontWeight: 600, color: '#ffffff',
+              fontSize: 'clamp(0.85rem, 2.8vw, 0.95rem)', fontWeight: 600, color: '#ffffff',
               margin: 0, fontFamily: 'var(--font-heading)', lineHeight: 1.4,
             }}>
               {speechBubbleText}
@@ -115,7 +117,8 @@ export const CatwomanEasterEgg: React.FC = () => {
         style={{
           pointerEvents: 'auto',
           cursor: 'pointer',
-          width: 'min(280px, 72vw)',
+          width: 'min(260px, 68vw)',
+          maxWidth: '100%',
           filter: isHovered
             ? 'drop-shadow(0 0 28px rgba(100, 200, 255, 0.55)) drop-shadow(0 12px 24px rgba(0,0,0,0.4))'
             : 'drop-shadow(0 6px 18px rgba(0,0,0,0.35)) drop-shadow(0 0 8px rgba(150,220,255,0.1))',
